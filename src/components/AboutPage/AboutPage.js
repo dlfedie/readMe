@@ -9,7 +9,7 @@ const AboutPage = () => (
   <div>
     <div>
       <p>
-        This about page is for anyone to read!
+        ReadMe is a web-based app that helps track your book library, list of books you want to read, and what you're currently reading!
       </p>
     </div>
   </div>
