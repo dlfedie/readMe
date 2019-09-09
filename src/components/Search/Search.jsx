@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 //material ui
 import 'typeface-roboto';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
+
 
 
 //basic class component. what we've been taught, so I'll start here.
@@ -19,6 +22,7 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing(1),
     },
+    
 });
 
 class Search extends Component {
@@ -27,7 +31,7 @@ class Search extends Component {
         console.log('clicked on the search icon!');
         this.props.dispatch({
             type: 'SEARCH_FOR_BOOKS',
-            payload: 'the hobbit'
+            payload: {search: 'the hobbit'}
         })
     }
 
@@ -57,4 +61,10 @@ class Search extends Component {
     }
 }
 
-export default (withStyles(styles)(Search));
+const mapStateToProps = (reduxStore) => {
+    return {
+        reduxStore
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Search));

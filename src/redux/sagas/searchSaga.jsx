@@ -5,7 +5,10 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* searchForBooks(action) {
     try {
         yield console.log('in searchSaga, yay!');
-        
+        yield put({
+            type: 'SET_SEARCH_RESULTS',
+            payload: action.payload
+        })
 
     } catch(error) {
         console.log('error in search GET:', error)
