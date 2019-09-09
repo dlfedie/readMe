@@ -10,7 +10,7 @@ const CurrentReads = (props) => (
     <h1 id="welcome">
       Welcome, { props.user.username }!
     </h1>
-    <p>Here is your Current Reads:</p>
+    <p>Here are your Current Reads:</p>
     {/* <LogOutButton className="log-in" /> */}
   </div>
 );

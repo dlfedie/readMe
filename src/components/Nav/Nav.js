@@ -22,9 +22,13 @@ const Nav = (props) => (
           <Link className="nav-link" to="/library">
             My Library
           </Link>
+          <Link className="nav-link" to="/wishlist">
+            Wish List
+          </Link>
           <LogOutButton className="nav-link"/>
         </>
       )}
+      
       {/* Always show this link since the about page is not protected */}
       <Link className="nav-link" to="/about">
         About

@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import AboutPage from '../AboutPage/AboutPage';
 import CurrentReads from '../CurrentReads/CurrentReads';
 import MyLibrary from '../MyLibrary/MyLibrary';
+import WishList from '../WishList/WishList';
 
 import './App.css';
 
@@ -54,6 +55,11 @@ class App extends Component {
               exact
               path="/library"
               component={MyLibrary}
+            />
+            <ProtectedRoute
+              exact
+              path="/wishlist"
+              component={WishList}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
