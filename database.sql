@@ -33,11 +33,7 @@ CREATE TABLE "books"
     "wish_list" bool NOT NULL,
     "nope_list" bool NOT NULL,
     CONSTRAINT "books_pk" PRIMARY KEY ("id")
-)
-WITH (
-  OIDS=FALSE
 );
-
 
 
 CREATE TABLE "tags"
@@ -47,10 +43,8 @@ CREATE TABLE "tags"
     "user_id" int NOT NULL,
     "book_id" int NOT NULL,
     CONSTRAINT "tags_pk" PRIMARY KEY ("id")
-)
-WITH (
-  OIDS=FALSE
 );
+
 
 
 
@@ -61,9 +55,6 @@ CREATE TABLE "friends"
     "created_friend" varchar(50) NOT NULL,
     "book_id" int NOT NULL,
     CONSTRAINT "friends_pk" PRIMARY KEY ("id")
-)
-WITH (
-  OIDS=FALSE
 );
 
 
