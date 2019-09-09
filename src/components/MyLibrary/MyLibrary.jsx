@@ -5,12 +5,12 @@ import React from 'react';
 // It doesn't dispatch any redux actions or display any part of redux state
 // or even care what the redux state is, so it doesn't need 'connect()'
 
-const InfoPage = () => (
+const MyLibrary = () => (
   <div>
-    <p>
-      Info Page
-    </p>
+    <h1>
+      My Library
+    </h1>
   </div>
 );
 
-export default InfoPage;
+export default MyLibrary;
