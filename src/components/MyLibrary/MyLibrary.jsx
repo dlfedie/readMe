@@ -7,9 +7,9 @@ import React from 'react';
 
 const MyLibrary = () => (
   <div>
-    <p>
+    <h1>
       My Library
-    </p>
+    </h1>
   </div>
 );
 

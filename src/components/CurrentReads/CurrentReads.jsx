@@ -7,10 +7,10 @@ import { connect } from 'react-redux';
 // and then instead of `props.user.username` you could use `user.username`
 const CurrentReads = (props) => (
   <div>
-    <h1 id="welcome">
+    {/* <h1 id="welcome">
       Welcome, { props.user.username }!
-    </h1>
-    <p>Here are your Current Reads:</p>
+    </h1> */}
+    <h1>Current Reads:</h1>
     {/* <LogOutButton className="log-in" /> */}
   </div>
 );

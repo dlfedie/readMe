@@ -17,6 +17,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import CurrentReads from '../CurrentReads/CurrentReads';
 import MyLibrary from '../MyLibrary/MyLibrary';
 import WishList from '../WishList/WishList';
+import Search from '../Search/Search';
 
 import './App.css';
 
@@ -51,6 +52,11 @@ class App extends Component {
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
+            <ProtectedRoute
+              exact
+              path="/search"
+              component={Search}
+            />
             <ProtectedRoute
               exact
               path="/library"
