@@ -10,11 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-
-import { borders } from '@material-ui/system';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 //basic class component. what we've been taught, so I'll start here.
 
@@ -40,10 +36,17 @@ const styles = theme => ({
         height: 'auto',
         justifyContent: 'center',
         display: 'flex',
+        spacing: 1,
     },
     tileItem: {
         borderColor: 'text.primary',
-        m: 1,
+        height: 'auto',
+        maxWidth: '80%',
+        border: 1,
+        borderStyle: 'solid',
+        margin: theme.spacing(1),
+        justifyContent: 'center',
+
     }
 
 });
@@ -69,6 +72,18 @@ class Search extends Component {
             type: 'SEARCH_FOR_BOOKS',
             payload: { search: this.state.search }
         })
+        this.setState({
+            search: ''
+        })
+    }
+
+    addBookToLibrary = (book) => {
+        console.log('clicked on the add button!', book);
+        //books are in our search reducer. we want to grab the index, to go grab that book, and then do a POST to our db with that request
+        // this.props.dispatch({
+        //     type: 'ADD_BOOK_TO_LIBRARY',
+        //     payload: book
+        // })
     }
 
     render() {
@@ -76,13 +91,16 @@ class Search extends Component {
 
         let searchResultsList = this.props.searchResults.map((book, index) => {
             return (
-                <GridListTile key={index} cols={1} rows={1} className={classes.tileItem} border={1} >
+                <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
                     <div>
-                        <p>Title: {book.volumeInfo.title}</p>
-                        <p>{book.volumeInfo.subtitle}</p>
+                        <h4>{book.volumeInfo.title}</h4>
+                        <h5>{book.volumeInfo.subtitle}</h5>
                         <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
-                        <p>Authors: {book.volumeInfo.authors && book.volumeInfo.authors[0]}</p>
+                        <p>Author(s): {book.volumeInfo.authors && book.volumeInfo.authors.map((author, index) => { return (<span key={index}>{author} </span>)})}</p>
                         <p>Pages: {book.volumeInfo.pageCount}</p>
+                        <Fab color="secondary" aria-label="add" className={classes.fab} onClick={() => this.addBookToLibrary(book)} size="small">
+                            <AddCircleOutlineIcon fontSize="small" />
+                        </Fab>
                     </div>
                 </GridListTile>
             )
@@ -90,8 +108,9 @@ class Search extends Component {
 
         return (
             <>
-                <h1>Search</h1>
                 <div className={classes.root}>
+                    <h1 className={classes.sectionHeader}>Search</h1>
+
                     <Grid container direction="row" spacing={2} justify="center">
                         <Grid item xl={12}>
                             {/* <form onSubmit={this.searchForBooks}> */}
