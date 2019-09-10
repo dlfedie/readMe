@@ -1,8 +1,4 @@
-const searchReducer = (state = [{
-    volumeInfo: {
-        title: ''
-    }
-}], action) => {
+const searchReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_SEARCH_RESULTS':
             return action.payload.data.items;

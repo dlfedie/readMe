@@ -11,7 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
+import { borders } from '@material-ui/system';
 
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 //basic class component. what we've been taught, so I'll start here.
 
@@ -27,12 +30,21 @@ const styles = theme => ({
     },
     root: {
         flexGrow: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
     },
     gridList: {
         width: 'auto',
         height: 'auto',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        display: 'flex',
     },
+    tileItem: {
+        borderColor: 'text.primary',
+        m: 1,
+    }
 
 });
 
@@ -62,12 +74,15 @@ class Search extends Component {
     render() {
         const { classes } = this.props;
 
-        let searchResultsList = this.props.searchResults.map((book) => {
+        let searchResultsList = this.props.searchResults.map((book, index) => {
             return (
-                //this is a separate component, to make this smaller
-                <GridListTile key={book.id} cols={1} rows={1}>
+                <GridListTile key={index} cols={1} rows={1} className={classes.tileItem} border={1} >
                     <div>
-                        <p>{book.volumeInfo.title}</p>
+                        <p>Title: {book.volumeInfo.title}</p>
+                        <p>{book.volumeInfo.subtitle}</p>
+                        <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
+                        <p>Authors: {book.volumeInfo.authors && book.volumeInfo.authors[0]}</p>
+                        <p>Pages: {book.volumeInfo.pageCount}</p>
                     </div>
                 </GridListTile>
             )
@@ -96,6 +111,7 @@ class Search extends Component {
                             {/* </form> */}
                         </Grid>
                     </Grid>
+                    {this.props.searchResults &&
                     <GridList
                         cols={1}
                         cellHeight={'auto'}
@@ -103,8 +119,8 @@ class Search extends Component {
                         className={classes.gridList}
                     >
                         {searchResultsList}
-                    </GridList>
-                    {JSON.stringify(this.props.searchResults)}
+                    </GridList>}
+                    {/* {JSON.stringify(this.props.searchResults)} */}
                 </div>
 
             </>
