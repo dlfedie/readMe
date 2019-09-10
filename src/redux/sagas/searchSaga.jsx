@@ -5,9 +5,12 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* searchForBooks(action) {
     try {
         yield console.log('in searchSaga, yay!');
+        let searchResponse = yield axios.post('/api/search', action.payload);
+        console.log('searchForBooks response', searchResponse);
+        
         yield put({
             type: 'SET_SEARCH_RESULTS',
-            payload: action.payload
+            payload: searchResponse
         })
 
     } catch(error) {

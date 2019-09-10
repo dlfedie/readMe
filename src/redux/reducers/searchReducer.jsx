@@ -1,7 +1,11 @@
-const searchReducer = (state = {}, action) => {
+const searchReducer = (state = [{
+    volumeInfo: {
+        title: ''
+    }
+}], action) => {
     switch (action.type) {
         case 'SET_SEARCH_RESULTS':
-            return action.payload;
+            return action.payload.data.items;
         default:
             return state;
     }
