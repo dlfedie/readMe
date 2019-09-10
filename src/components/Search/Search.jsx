@@ -79,11 +79,12 @@ class Search extends Component {
 
     addBookToLibrary = (book) => {
         console.log('clicked on the add button!', book);
-        //books are in our search reducer. we want to grab the index, to go grab that book, and then do a POST to our db with that request
-        // this.props.dispatch({
-        //     type: 'ADD_BOOK_TO_LIBRARY',
-        //     payload: book
-        // })
+        //books are in our search reducer. we have the book here, and then do a POST to our db with that request
+        
+        this.props.dispatch({
+            type: 'ADD_BOOK_TO_LIBRARY',
+            payload: book
+        })
     }
 
     render() {
@@ -117,7 +118,7 @@ class Search extends Component {
                                 <TextField
                                     id="outlined-helperText"
                                     label="Search"
-                                    defaultValue=""
+                                    value={this.state.search}
                                     className={classes.textField}
                                     helperText="Search by title and/or author!"
                                     margin="normal"
@@ -149,7 +150,8 @@ class Search extends Component {
 
 const mapStateToProps = (reduxStore) => {
     return {
-        searchResults: reduxStore.searchResults
+        searchResults: reduxStore.searchResults,
+        user: reduxStore.user
     }
 }
 
