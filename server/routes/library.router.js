@@ -24,9 +24,6 @@ router.post('/', (req, res) => {
     let combinedAuthors = '';
     if (newBook.volumeInfo.authors[1]) {
         combinedAuthors = authors.join(', ');
-        // for (author of authors) {
-        //     combinedAuthors = `${combinedAuthors}, ` + `${author}`;
-        // }
     } else {
         combinedAuthors = newBook.volumeInfo.authors[0]
     }
