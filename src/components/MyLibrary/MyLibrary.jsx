@@ -9,6 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Rating from '@material-ui/lab/Rating';
 
 
 const styles = theme => ({
@@ -64,6 +65,10 @@ class MyLibrary extends Component {
             type: 'DELETE_BOOK',
             payload: {bookIdToDelete: id}
         })
+    }
+
+    changeRating = (event) => {
+        console.log('changing rating of book id, value:', event);
         
     }
 
@@ -77,6 +82,11 @@ class MyLibrary extends Component {
                         <h4>{book.book_title}</h4>
                         <h5>{book.book_subtitle}</h5>
                         <img src={book.book_image_url} alt={book.book_title} />
+                        <Rating
+                            name={book.book_title}
+                            value={book.rating}
+                            onChange={(event) => this.changeRating(book.id)}
+                        />
                         <p>Author(s): {book.book_author}</p>
                         <p>Pages: {book.page_total}</p>
                         <Fab color="secondary" aria-label="remove" className={classes.fab} onClick={() => this.removeBookFromLibrary(book.id)} size="small">
