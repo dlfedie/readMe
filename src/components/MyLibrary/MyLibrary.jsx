@@ -60,6 +60,10 @@ class MyLibrary extends Component {
 
     removeBookFromLibrary = (id) => {
         console.log('clicked on delete for book ID:', id);
+        this.props.dispatch({
+            type: 'DELETE_BOOK',
+            payload: {bookIdToDelete: id}
+        })
         
     }
 

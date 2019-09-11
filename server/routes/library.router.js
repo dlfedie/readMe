@@ -48,4 +48,37 @@ router.post('/', (req, res) => {
         })
 });
 
+//delete route
+router.delete('/:id', (req, res) => {
+    const bookId = req.params.id;
+    console.log('attmpting to delete,', bookId, 'from user:', req.user.id);
+
+    //need to check if user is the correct one; don't need any cross-deleting/postman deletes to happen.
+    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [bookId])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if(result.rows[0].user_id === req.user.id) {
+                const queryText = `DELETE FROM "books" WHERE "id" = $1;`;
+                pool.query(queryText, [bookId])
+                    .then(result => {
+                        res.sendStatus(204);
+                    }).catch(err =>{
+                        console.log('error in actual DELETE try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to delete a book that's not theirs
+                res.sendStatus(403);
+            }
+            
+        }).catch(err => {
+            console.log('error in delete auth check:', err);
+            res.sendStatus(500);
+        })
+
+})
+
 module.exports = router;

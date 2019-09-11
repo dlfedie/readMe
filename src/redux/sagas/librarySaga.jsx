@@ -25,7 +25,6 @@ function* fetchLibrary(action) {
             type: 'SET_LIBRARY',
             payload: fetchResponse.data
         })
-        
 
     } catch(err) {
         console.log('error in fetchLibrary GET:', err);
@@ -33,9 +32,25 @@ function* fetchLibrary(action) {
     }
 }
 
+function* removeBook(action) {
+    try {
+        yield console.log('in removeBook DELETE', action.payload.bookIdToDelete);
+        yield axios.delete(`/api/library/${action.payload.bookIdToDelete}`);
+        yield put({
+            type: 'FETCH_LIBRARY'
+        });
+        
+        
+    } catch(err) {
+        console.log('error in removeBook DELETE:', err);
+        
+    }
+}
+
 function* librarySaga() {
     yield takeLatest('ADD_BOOK_TO_LIBRARY', addBookToLibrary);
     yield takeLatest('FETCH_LIBRARY', fetchLibrary);
+    yield takeLatest('DELETE_BOOK', removeBook);
 }
 
 export default librarySaga;
