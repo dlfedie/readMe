@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const styles = theme => ({
@@ -58,6 +58,11 @@ class MyLibrary extends Component {
         })
     }
 
+    removeBookFromLibrary = (id) => {
+        console.log('clicked on delete for book ID:', id);
+        
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -70,9 +75,9 @@ class MyLibrary extends Component {
                         <img src={book.book_image_url} alt={book.book_title} />
                         <p>Author(s): {book.book_author}</p>
                         <p>Pages: {book.page_total}</p>
-                        {/* <Fab color="secondary" aria-label="add" className={classes.fab} onClick={() => this.addBookToLibrary(book)} size="small">
-                            <AddCircleOutlineIcon fontSize="small" />
-                        </Fab> */}
+                        <Fab color="secondary" aria-label="remove" className={classes.fab} onClick={() => this.removeBookFromLibrary(book.id)} size="small">
+                            <DeleteIcon fontSize="small" />
+                        </Fab>
                     </div>
                 </GridListTile>
             )
