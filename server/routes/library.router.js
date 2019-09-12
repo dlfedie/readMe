@@ -78,7 +78,40 @@ router.delete('/:id', (req, res) => {
             console.log('error in delete auth check:', err);
             res.sendStatus(500);
         })
+})
 
+//update route
+router.put('/', (req, res) => {
+    console.log('attempting to update rating:', req.body);
+    const bookToUpdate = req.body.bookId;
+    const rating = req.body.value;
+
+    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [bookToUpdate])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `UPDATE "books" SET "rating" = $1 WHERE "id" = $2;`;
+                pool.query(queryText, [rating, bookToUpdate])
+                    .then(result => {
+                        res.sendStatus(200);
+                    }).catch(err => {
+                        console.log('error in actual DELETE try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to update a book that's not theirs
+                res.sendStatus(403);
+            }
+
+        }).catch(err => {
+            console.log('error in delete auth check:', err);
+            res.sendStatus(500);
+        })
+    
 })
 
 module.exports = router;

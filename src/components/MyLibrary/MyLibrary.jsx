@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import LibraryItem from '../LibraryItem/LibraryItem';
 
 //material ui
 import 'typeface-roboto';
 import { withStyles } from '@material-ui/core/styles';
 
-import Fab from '@material-ui/core/Fab';
 import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Rating from '@material-ui/lab/Rating';
+
 
 
 const styles = theme => ({
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
+    
     fab: {
         margin: theme.spacing(1),
     },
@@ -28,7 +23,7 @@ const styles = theme => ({
         overflow: 'hidden',
     },
     gridList: {
-        width: 'auto',
+        width: '90%',
         height: 'auto',
         justifyContent: 'center',
         display: 'flex',
@@ -37,7 +32,8 @@ const styles = theme => ({
     tileItem: {
         borderColor: 'text.primary',
         height: 'auto',
-        maxWidth: '80%',
+        width: '90%',
+        // maxWidth: '80%',
         border: 1,
         borderStyle: 'solid',
         margin: theme.spacing(1),
@@ -59,41 +55,42 @@ class MyLibrary extends Component {
         })
     }
 
-    removeBookFromLibrary = (id) => {
-        console.log('clicked on delete for book ID:', id);
-        this.props.dispatch({
-            type: 'DELETE_BOOK',
-            payload: {bookIdToDelete: id}
-        })
-    }
+    // removeBookFromLibrary = (id) => {
+    //     console.log('clicked on delete for book ID:', id);
+    //     this.props.dispatch({
+    //         type: 'DELETE_BOOK',
+    //         payload: {bookIdToDelete: id}
+    //     })
+    // }
 
-    changeRating = (event) => {
-        console.log('changing rating of book id, value:', event);
+    // changeRating = (event) => {
+    //     console.log('changing rating of book id, value:', event);
         
-    }
+    // }
 
     render() {
         const { classes } = this.props;
 
         let libraryResults = this.props.library.map((book, index) => {
             return ( 
-                <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
-                    <div>
-                        <h4>{book.book_title}</h4>
-                        <h5>{book.book_subtitle}</h5>
-                        <img src={book.book_image_url} alt={book.book_title} />
-                        <Rating
-                            name={book.book_title}
-                            value={book.rating}
-                            onChange={(event) => this.changeRating(book.id)}
-                        />
-                        <p>Author(s): {book.book_author}</p>
-                        <p>Pages: {book.page_total}</p>
-                        <Fab color="secondary" aria-label="remove" className={classes.fab} onClick={() => this.removeBookFromLibrary(book.id)} size="small">
-                            <DeleteIcon fontSize="small" />
-                        </Fab>
-                    </div>
-                </GridListTile>
+                <LibraryItem book={book} key={index} className={classes.tileItem}/>
+                // <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
+                //     <div>
+                //         <h4>{book.book_title}</h4>
+                //         <h5>{book.book_subtitle}</h5>
+                //         <img src={book.book_image_url} alt={book.book_title} />
+                //         <Rating
+                //             name={book.book_title}
+                //             value={book.rating}
+                //             onChange={(event) => this.changeRating(book.id)}
+                //         />
+                //         <p>Author(s): {book.book_author}</p>
+                //         <p>Pages: {book.page_total}</p>
+                //         <Fab color="secondary" aria-label="remove" className={classes.fab} onClick={() => this.removeBookFromLibrary(book.id)} size="small">
+                //             <DeleteIcon fontSize="small" />
+                //         </Fab>
+                //     </div>
+                // </GridListTile>
             )
         })
 
