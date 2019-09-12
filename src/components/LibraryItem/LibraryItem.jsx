@@ -73,7 +73,7 @@ class LibraryItem extends Component {
                     <h5>{this.props.book.book_subtitle}</h5>
                     <img src={this.props.book.book_image_url} alt={this.props.book.book_title} />
                     <Rating
-                        name={this.props.book.book_title}
+                        name={JSON.stringify(this.props.book.id)}
                         value={this.props.book.rating}
                         onChange={(event) => this.changeRating(event)}
                     />
