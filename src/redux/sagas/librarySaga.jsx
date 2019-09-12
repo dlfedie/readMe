@@ -39,11 +39,21 @@ function* removeBook(action) {
         yield put({
             type: 'FETCH_LIBRARY'
         });
-        
-        
     } catch(err) {
         console.log('error in removeBook DELETE:', err);
-        
+    }
+}
+
+function* updateRating(action) {
+    try {  
+        yield console.log('in updateRating', action.payload);
+        yield axios.put('/api/library', action.payload);
+        yield put({
+            type: 'FETCH_LIBRARY'
+        });
+
+    } catch(err) {
+        console.log('error in rating update:', err);
     }
 }
 
@@ -51,6 +61,7 @@ function* librarySaga() {
     yield takeLatest('ADD_BOOK_TO_LIBRARY', addBookToLibrary);
     yield takeLatest('FETCH_LIBRARY', fetchLibrary);
     yield takeLatest('DELETE_BOOK', removeBook);
+    yield takeLatest('UPDATE_RATING', updateRating);
 }
 
 export default librarySaga;
