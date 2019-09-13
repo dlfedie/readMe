@@ -57,7 +57,7 @@ class MyLibrary extends Component {
             type: 'FETCH_LIBRARY'
         })
         // window.scrollTo(0, this.props.history);
-        if (this.props.bookOn !== '') {
+        if (this.props.bookOn && this.props.bookOn !== '') {
             document.getElementById(this.props.bookOn).scrollIntoView();
         }
         this.props.dispatch({

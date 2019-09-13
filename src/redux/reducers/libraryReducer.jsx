@@ -19,7 +19,7 @@ const detailsReducer = (state = {}, action) => {
     }
 }
 
-const bookOnReducer = (state = 'topOfPage', action) => {
+const bookOnReducer = (state = '', action) => {
     switch (action.type) {
         case 'SET_BOOK_CLICKED':
             return action.payload

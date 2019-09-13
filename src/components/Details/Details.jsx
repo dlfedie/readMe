@@ -65,6 +65,10 @@ class Details extends Component {
             payload: this.props.match.params.id
         })
         window.scrollTo(0,0);
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: this.props.match.params.id
+        })
     }
 
     render() {
@@ -91,6 +95,10 @@ class Details extends Component {
                     <div className={classes.summaryText}>
                         <h5 className={classes.title}>Summary</h5>
                         <p>{this.props.book.book_summary}</p>
+                    </div>
+                    <div className={classes.notesText}>
+                        <h5 className={classes.title}>Notes</h5>
+                        <p>{this.props.book.notes}</p>
                     </div>
                     <Button variant="contained" size="small" color="primary" onClick={()=> this.props.history.push('/library')}>
                         Back
