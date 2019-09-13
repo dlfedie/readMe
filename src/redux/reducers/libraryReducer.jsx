@@ -1,3 +1,6 @@
+import { combineReducers } from 'redux';
+
+
 const libraryReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LIBRARY':
@@ -7,5 +10,27 @@ const libraryReducer = (state = [], action) => {
     }
 };
 
+const detailsReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_DETAILS':
+            return action.payload
+        default:
+            return state
+    }
+}
 
-export default libraryReducer;
+const bookOnReducer = (state = '', action) => {
+    switch (action.type) {
+        case 'SET_BOOK_CLICKED':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+
+export default combineReducers({
+    libraryReducer,
+    detailsReducer,
+    bookOnReducer
+});

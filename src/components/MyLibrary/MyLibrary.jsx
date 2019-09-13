@@ -11,7 +11,7 @@ import GridList from '@material-ui/core/GridList';
 
 
 const styles = theme => ({
-    
+
     fab: {
         margin: theme.spacing(1),
     },
@@ -33,7 +33,6 @@ const styles = theme => ({
         borderColor: 'text.primary',
         height: 'auto',
         width: '90%',
-        // maxWidth: '80%',
         border: 1,
         borderStyle: 'solid',
         margin: theme.spacing(1),
@@ -47,58 +46,42 @@ class MyLibrary extends Component {
     //go get library on mount
     componentDidMount() {
         this.getLibrary();
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: ''
+        })
     }
 
     getLibrary = () => {
         this.props.dispatch({
             type: 'FETCH_LIBRARY'
         })
+        // window.scrollTo(0, this.props.history);
+        if (this.props.bookOn && this.props.bookOn !== '') {
+            document.getElementById(this.props.bookOn).scrollIntoView();
+        }
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: ''
+        })
     }
 
-    // removeBookFromLibrary = (id) => {
-    //     console.log('clicked on delete for book ID:', id);
-    //     this.props.dispatch({
-    //         type: 'DELETE_BOOK',
-    //         payload: {bookIdToDelete: id}
-    //     })
-    // }
 
-    // changeRating = (event) => {
-    //     console.log('changing rating of book id, value:', event);
-        
-    // }
 
     render() {
         const { classes } = this.props;
 
-        let libraryResults = this.props.library.map((book, index) => {
-            return ( 
-                <LibraryItem book={book} key={index} className={classes.tileItem}/>
-                // <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
-                //     <div>
-                //         <h4>{book.book_title}</h4>
-                //         <h5>{book.book_subtitle}</h5>
-                //         <img src={book.book_image_url} alt={book.book_title} />
-                //         <Rating
-                //             name={book.book_title}
-                //             value={book.rating}
-                //             onChange={(event) => this.changeRating(book.id)}
-                //         />
-                //         <p>Author(s): {book.book_author}</p>
-                //         <p>Pages: {book.page_total}</p>
-                //         <Fab color="secondary" aria-label="remove" className={classes.fab} onClick={() => this.removeBookFromLibrary(book.id)} size="small">
-                //             <DeleteIcon fontSize="small" />
-                //         </Fab>
-                //     </div>
-                // </GridListTile>
+        let libraryResults = this.props.library.map((book) => {
+            return (
+                <LibraryItem book={book} key={book.id} className={classes.tileItem} />
             )
         })
 
 
         return (
             <div className={classes.root}>
-                <h1>My Library</h1>
-                    {this.props.library &&
+                <h1 id="topOfPage">My Library</h1>
+                {this.props.library &&
                     <GridList
                         cols={1}
                         cellHeight={'auto'}
@@ -114,7 +97,8 @@ class MyLibrary extends Component {
 
 const mapStateToProps = (reduxStore) => {
     return {
-        library: reduxStore.library
+        library: reduxStore.library.libraryReducer,
+        bookOn: reduxStore.library.bookOnReducer
     }
 }
 

@@ -21,6 +21,7 @@ import CurrentReads from '../CurrentReads/CurrentReads';
 import MyLibrary from '../MyLibrary/MyLibrary';
 import WishList from '../WishList/WishList';
 import Search from '../Search/Search';
+import Details from '../Details/Details';
 
 //Material UI
 import 'typeface-roboto';
@@ -85,6 +86,11 @@ class App extends Component {
                 exact
                 path="/wishlist"
                 component={WishList}
+              />
+              <ProtectedRoute
+                exact
+                path="/details/:id"
+                component={Details}
               />
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />
