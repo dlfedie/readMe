@@ -1,3 +1,6 @@
+import { combineReducers } from 'redux';
+
+
 const searchReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_SEARCH_RESULTS':
@@ -7,6 +10,18 @@ const searchReducer = (state = [], action) => {
     }
 };
 
+const searchDetails = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_SEARCH_DETAILS_PAGE':
+            return action.payload
+        default:
+            return state
+    }
+}
+
 // user will be on the redux state at:
 // state.user
-export default searchReducer;
+export default combineReducers({
+    searchReducer,
+    searchDetails
+});

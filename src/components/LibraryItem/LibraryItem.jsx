@@ -71,7 +71,7 @@ class LibraryItem extends Component {
             payload: id
         })
         
-        this.props.history.push(`/details/${id}`);
+        this.props.history.push(`/librarydetails/${id}`);
     }
 
 

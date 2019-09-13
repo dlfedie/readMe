@@ -6,10 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-// import CardHeader from '@material-ui/core/CardHeader';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardActions from '@material-ui/core/CardActions';
+
 
 const styles = theme => ({
     root: {
@@ -57,7 +54,7 @@ const styles = theme => ({
 
 });
 
-class Details extends Component {
+class LibraryDetails extends Component {
 
     componentDidMount() {
         this.props.dispatch({
@@ -115,4 +112,4 @@ const mapStateToProps = (reduxStore) => {
     }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Details));
+export default connect(mapStateToProps)(withStyles(styles)(LibraryDetails));
