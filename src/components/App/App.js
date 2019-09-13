@@ -21,11 +21,12 @@ import CurrentReads from '../CurrentReads/CurrentReads';
 import MyLibrary from '../MyLibrary/MyLibrary';
 import WishList from '../WishList/WishList';
 import Search from '../Search/Search';
-import Details from '../Details/Details';
+import LibraryDetails from '../LibraryDetails/LibraryDetails';
 
 //Material UI
 import 'typeface-roboto';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import SearchDetails from '../SearchDetails/SearchDetails';
 
 const theme = createMuiTheme({
   //color palette
@@ -79,6 +80,11 @@ class App extends Component {
               />
               <ProtectedRoute
                 exact
+                path="/searchdetails"
+                component={SearchDetails}
+              />
+              <ProtectedRoute
+                exact
                 path="/library"
                 component={MyLibrary}
               />
@@ -89,8 +95,8 @@ class App extends Component {
               />
               <ProtectedRoute
                 exact
-                path="/details/:id"
-                component={Details}
+                path="/librarydetails/:id"
+                component={LibraryDetails}
               />
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />

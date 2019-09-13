@@ -80,11 +80,21 @@ class Search extends Component {
     addBookToLibrary = (book) => {
         console.log('clicked on the add button!', book);
         //books are in our search reducer. we have the book here, and then do a POST to our db with that request
-        
+
         this.props.dispatch({
             type: 'ADD_BOOK_TO_LIBRARY',
             payload: book
         })
+    }
+
+    getSearchBookDetails = (book) => {
+        console.log('clicked on a book on the search page, ID:', book.id);
+        this.props.dispatch({
+            type: 'SET_SEARCH_DETAILS_PAGE',
+            payload: book
+        })
+        this.props.history.push('/searchdetails')
+
     }
 
     render() {
@@ -94,10 +104,12 @@ class Search extends Component {
             return (
                 <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
                     <div>
-                        <h4>{book.volumeInfo.title}</h4>
-                        <h5>{book.volumeInfo.subtitle}</h5>
-                        <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
-                        <p>Author(s): {book.volumeInfo.authors && book.volumeInfo.authors.map((author, index) => { return (<span key={index}>{author} </span>)})}</p>
+                        <div onClick={() => this.getSearchBookDetails(book)}>
+                            <h4>{book.volumeInfo.title}</h4>
+                            <h5>{book.volumeInfo.subtitle}</h5>
+                            <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
+                        </div>
+                        <p>Author(s): {book.volumeInfo.authors && book.volumeInfo.authors.map((author, index) => { return (<span key={index}>{author} </span>) })}</p>
                         <p>Pages: {book.volumeInfo.pageCount}</p>
                         <Fab color="secondary" aria-label="add" className={classes.fab} onClick={() => this.addBookToLibrary(book)} size="small">
                             <AddCircleOutlineIcon fontSize="small" />
@@ -115,31 +127,31 @@ class Search extends Component {
                     <Grid container direction="row" spacing={2} justify="center">
                         <Grid item xl={12}>
                             {/* <form onSubmit={this.searchForBooks}> */}
-                                <TextField
-                                    id="outlined-helperText"
-                                    label="Search"
-                                    value={this.state.search}
-                                    className={classes.textField}
-                                    helperText="Search by title and/or author!"
-                                    margin="normal"
-                                    variant="outlined"
-                                    onChange={this.setSearch}
-                                />
-                                <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.searchForBooks}>
-                                    <SearchIcon />
-                                </Fab>
+                            <TextField
+                                id="outlined-helperText"
+                                label="Search"
+                                value={this.state.search}
+                                className={classes.textField}
+                                helperText="Search by title and/or author!"
+                                margin="normal"
+                                variant="outlined"
+                                onChange={this.setSearch}
+                            />
+                            <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.searchForBooks}>
+                                <SearchIcon />
+                            </Fab>
                             {/* </form> */}
                         </Grid>
                     </Grid>
                     {this.props.searchResults &&
-                    <GridList
-                        cols={1}
-                        cellHeight={'auto'}
-                        spacing={15}
-                        className={classes.gridList}
-                    >
-                        {searchResultsList}
-                    </GridList>}
+                        <GridList
+                            cols={1}
+                            cellHeight={'auto'}
+                            spacing={15}
+                            className={classes.gridList}
+                        >
+                            {searchResultsList}
+                        </GridList>}
                     {/* {JSON.stringify(this.props.searchResults)} */}
                 </div>
 
@@ -150,7 +162,7 @@ class Search extends Component {
 
 const mapStateToProps = (reduxStore) => {
     return {
-        searchResults: reduxStore.searchResults,
+        searchResults: reduxStore.searchResults.searchReducer,
         user: reduxStore.user
     }
 }
