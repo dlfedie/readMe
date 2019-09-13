@@ -57,11 +57,27 @@ function* updateRating(action) {
     }
 }
 
+function* getDetails(action) {
+    try {
+        yield console.log('in getDetails:', action.payload);
+        let getDetailsResponse = yield axios.get(`/api/library/${action.payload}`);
+        yield put({
+            type: 'SET_DETAILS',
+            payload: getDetailsResponse.data
+        })
+
+    } catch(err) {
+        console.log('error in getDetails:', err);
+        
+    }
+}
+
 function* librarySaga() {
     yield takeLatest('ADD_BOOK_TO_LIBRARY', addBookToLibrary);
     yield takeLatest('FETCH_LIBRARY', fetchLibrary);
     yield takeLatest('DELETE_BOOK', removeBook);
     yield takeLatest('UPDATE_RATING', updateRating);
+    yield takeLatest('GET_DETAILS', getDetails);
 }
 
 export default librarySaga;

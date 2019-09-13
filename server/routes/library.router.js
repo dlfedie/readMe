@@ -20,6 +20,21 @@ router.get('/', (req, res) => {
         })
 });
 
+//specific GET
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    console.log('in specific ID get:', id);
+    const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            res.send(result.rows[0]);
+        }).catch(err => {
+            console.log('error in specific id GET:', err);
+            res.sendStatus(500);
+        })
+    
+})
+
 /**
  * POST route template
  */

@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
+
 
 
 //material ui
@@ -14,7 +16,7 @@ import Rating from '@material-ui/lab/Rating';
 
 
 const styles = theme => ({
-    
+
     fab: {
         margin: theme.spacing(1),
     },
@@ -25,7 +27,7 @@ const styles = theme => ({
         justifyContent: 'space-around',
         overflow: 'hidden',
     },
-    
+
     tileItem: {
         borderColor: 'text.primary',
         height: 'auto',
@@ -59,7 +61,17 @@ class LibraryItem extends Component {
                 bookId: this.props.book.id
             }
         })
+    }
 
+    getBookDetails = (id) => {
+        console.log('clicked on book ID:', id);
+        //attempting to pull focus when users go back to library
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: id
+        })
+        
+        this.props.history.push(`/details/${id}`);
     }
 
 
@@ -67,11 +79,13 @@ class LibraryItem extends Component {
         const { classes } = this.props;
 
         return (
-            <GridListTile key={this.props.index} cols={1} rows={1} className={classes.tileItem}  >
+            <GridListTile key={this.props.book.id} id={this.props.book.id} cols={1} rows={1} className={classes.tileItem}  >
                 <div>
-                    <h4>{this.props.book.book_title}</h4>
-                    <h5>{this.props.book.book_subtitle}</h5>
-                    <img src={this.props.book.book_image_url} alt={this.props.book.book_title} />
+                    <div onClick={() => this.getBookDetails(this.props.book.id)}>
+                        <h4>{this.props.book.book_title}</h4>
+                        <h5>{this.props.book.book_subtitle}</h5>
+                        <img src={this.props.book.book_image_url} alt={this.props.book.book_title} />
+                    </div>
                     <Rating
                         name={JSON.stringify(this.props.book.id)}
                         value={this.props.book.rating}
@@ -90,4 +104,4 @@ class LibraryItem extends Component {
 
 
 
-export default connect()(withStyles(styles)(LibraryItem));
+export default withRouter(connect()(withStyles(styles)(LibraryItem)));
