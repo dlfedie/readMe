@@ -2,11 +2,13 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require('axios');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+
 
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 
 });
 
@@ -14,7 +16,7 @@ router.get('/', (req, res) => {
  * POST route template
  */
 
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     //log the query
     const searchQuery = req.body;
     //looks like we get .search as a key
