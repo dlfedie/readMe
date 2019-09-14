@@ -1,11 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+
 
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('in library full GET');
     //go get all books in user's library in DB
     const queryText = `SELECT * FROM "books" WHERE "user_id" = $1 ORDER BY "book_title" ASC;`;
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
 });
 
 //specific GET
-router.get('/:id', (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res) => {
     const id = req.params.id;
     console.log('in specific ID get:', id);
     const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
@@ -38,7 +40,7 @@ router.get('/:id', (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     const newBook = req.body;
     const user = req.user.id;
     //log what we get, see if still an object
@@ -64,7 +66,7 @@ router.post('/', (req, res) => {
 });
 
 //delete route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
     const bookId = req.params.id;
     console.log('attmpting to delete,', bookId, 'from user:', req.user.id);
 
@@ -96,7 +98,7 @@ router.delete('/:id', (req, res) => {
 })
 
 //update route
-router.put('/', (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
     console.log('attempting to update rating:', req.body);
     const bookToUpdate = req.body.bookId;
     const rating = req.body.value;
