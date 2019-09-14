@@ -19,6 +19,15 @@ const detailsReducer = (state = {}, action) => {
     }
 }
 
+const editBookReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_EDITS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
 const bookOnReducer = (state = '', action) => {
     switch (action.type) {
         case 'SET_BOOK_CLICKED':
@@ -32,5 +41,6 @@ const bookOnReducer = (state = '', action) => {
 export default combineReducers({
     libraryReducer,
     detailsReducer,
-    bookOnReducer
+    bookOnReducer,
+    editBookReducer,
 });
