@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
+import Notes from '../Notes/Notes'
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -111,6 +112,19 @@ class EditBook extends Component {
 
     }
 
+    openNote = (note) => {
+        console.log('clicked on a note icon');
+        this.props.dispatch({
+            type: 'SET_BOOK_NOTES',
+            payload: {
+                notes: note
+            }
+        })
+        this.props.dispatch({
+            type: 'OPEN_NOTES'
+        })
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -153,11 +167,19 @@ class EditBook extends Component {
                         />
                         <p>Pages: {this.props.edit.page_total}</p>
                         {this.props.edit.notes ?
-                            <IconButton aria-label="note" className={classes.notes}>
-                                <NoteIcon fontSize="small" />
+                            <IconButton 
+                                aria-label="note" 
+                                className={classes.notes}
+                                onClick={() => this.openNote(this.props.edit.notes)}
+                                >
+                                    <NoteIcon fontSize="small" />
                             </IconButton> :
-                            <IconButton aria-label="noteAdd" className={classes.notes}>
-                                <NoteAddIcon fontSize="small" />
+                            <IconButton 
+                                aria-label="noteAdd" 
+                                className={classes.notes}
+                                onClick={() => this.openNote(this.props.edit.notes)}
+                                >
+                                    <NoteAddIcon fontSize="small" />
                             </IconButton>
                         }
                         <div className={classes.notesText}>
@@ -185,7 +207,7 @@ class EditBook extends Component {
                         </div>
                     </div>
                 </Card>
-
+                <Notes />
             </div>
         )
     }
@@ -193,7 +215,8 @@ class EditBook extends Component {
 
 const mapStateToProps = (reduxStore) => {
     return {
-        edit: reduxStore.library.editBookReducer
+        edit: reduxStore.library.editBookReducer,
+        notesReducer: reduxStore.notes
     }
 }
 

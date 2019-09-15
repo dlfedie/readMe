@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 //basic class component. what we've been taught, so I'll start here.
 
 class WishList extends Component {
     render() {
         return (
-            <h1>Here's our WishList</h1>
+            <h1>WishList</h1>
         )
     }
 }
