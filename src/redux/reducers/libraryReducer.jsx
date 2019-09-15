@@ -37,6 +37,15 @@ const bookOnReducer = (state = '', action) => {
     }
 }
 
+// const notesForBook = (state = '', action) => {
+//     switch (action.type) {
+//         case 'SET_BOOK_NOTES':
+//             return action.payload.notes
+//         default:
+//             return state
+//     }
+// }
+
 
 export default combineReducers({
     libraryReducer,
