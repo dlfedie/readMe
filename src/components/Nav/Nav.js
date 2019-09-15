@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import Menu from '../Menu/Menu';
 import './Nav.css';
 
 const Nav = (props) => (
@@ -9,6 +10,9 @@ const Nav = (props) => (
     <Link to="/home">
       <h2 id="nav-title" className="nav-title">ReadMe</h2>
     </Link>
+    <div>
+      <Menu />
+    </div>
     <div className="nav-right">
       <Link className="nav-link" to="/home">
         {/* Show this link if they are logged in or not,
