@@ -12,6 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import GridListTile from '@material-ui/core/GridListTile';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Rating from '@material-ui/lab/Rating';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -70,8 +71,19 @@ class LibraryItem extends Component {
             type: 'SET_BOOK_CLICKED',
             payload: id
         })
-        
+
         this.props.history.push(`/librarydetails/${id}`);
+    }
+
+    editBook = (book) => {
+        console.log('clicked on book ID:', book.id);
+        //attempting to pull focus when users go back to library
+        this.props.dispatch({
+            type: 'SET_EDITS',
+            payload: book
+        })
+
+        this.props.history.push(`/editbook/${book.id}`);
     }
 
 
@@ -86,6 +98,9 @@ class LibraryItem extends Component {
                         <h5>{this.props.book.book_subtitle}</h5>
                         <img src={this.props.book.book_image_url} alt={this.props.book.book_title} />
                     </div>
+                    <Button variant="contained" size="small" color="primary" onClick={() => this.editBook(this.props.book)}>
+                        Edit
+                    </Button>
                     <Rating
                         name={JSON.stringify(this.props.book.id)}
                         value={this.props.book.rating}

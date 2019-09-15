@@ -22,6 +22,7 @@ import MyLibrary from '../MyLibrary/MyLibrary';
 import WishList from '../WishList/WishList';
 import Search from '../Search/Search';
 import LibraryDetails from '../LibraryDetails/LibraryDetails';
+import EditBook from '../EditBook/EditBook';
 
 //Material UI
 import 'typeface-roboto';
@@ -97,6 +98,11 @@ class App extends Component {
                 exact
                 path="/librarydetails/:id"
                 component={LibraryDetails}
+              />
+              <ProtectedRoute
+                exact
+                path="/editbook/:id"
+                component={EditBook}
               />
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />
