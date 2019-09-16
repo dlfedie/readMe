@@ -47,13 +47,48 @@ function* removeBook(action) {
 function* updateRating(action) {
     try {  
         yield console.log('in updateRating', action.payload);
-        yield axios.put('/api/library', action.payload);
+        yield axios.put('/api/library/rating', action.payload);
         yield put({
             type: 'FETCH_LIBRARY'
         });
-
     } catch(err) {
         console.log('error in rating update:', err);
+    }
+}
+
+function* updateCurrent(action) {
+    try {
+        yield console.log('in updateCurrent', action.payload);
+        yield axios.put('/api/library/current', action.payload);
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+    } catch(err) {
+        console.log('error in updateCurrent:', err);
+    }
+}
+
+function* updateWish(action) {
+    try {
+        yield console.log('in updateWish', action.payload);
+        yield axios.put('/api/library/wish', action.payload);
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+    } catch (err) {
+        console.log('error in updateWish:', err);
+    }
+}
+
+function* updateNope(action) {
+    try {
+        yield console.log('in updateNope', action.payload);
+        yield axios.put('/api/library/nope', action.payload);
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+    } catch (err) {
+        console.log('error in updateNope:', err);
     }
 }
 
@@ -65,10 +100,8 @@ function* getDetails(action) {
             type: 'SET_DETAILS',
             payload: getDetailsResponse.data
         })
-
     } catch(err) {
         console.log('error in getDetails:', err);
-        
     }
 }
 
@@ -78,6 +111,10 @@ function* librarySaga() {
     yield takeLatest('DELETE_BOOK', removeBook);
     yield takeLatest('UPDATE_RATING', updateRating);
     yield takeLatest('GET_DETAILS', getDetails);
+    yield takeLatest('UPDATE_CURRENT', updateCurrent);
+    yield takeLatest('UPDATE_WISH', updateWish);
+    yield takeLatest('UPDATE_NOPE', updateNope);
+    
 }
 
 export default librarySaga;

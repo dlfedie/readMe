@@ -69,23 +69,65 @@ const styles = theme => ({
 
 class EditBook extends Component {
 
+    state = {
+        rating: 0,
+        current: false,
+        wish: false,
+        nope: false,
+
+    }
+
     componentDidMount() {
         // window.scrollTo(0, 0);
         this.props.dispatch({
             type: 'SET_BOOK_CLICKED',
             payload: this.props.match.params.id
         })
+        this.setState({
+            ...this.state,
+            current: this.props.edit.currently_reading,
+            wish: this.props.edit.wish_list,
+            nope: this.props.edit.nope_list,
+            rating: this.props.edit.rating,
+        })
     }
 
     cancelEdit = () => {
         console.log('clicked cancel button');
         this.props.history.goBack();
-
     }
 
     saveEdit = () => {
         console.log('clicked save button');
-
+        this.props.dispatch({
+            type: 'UPDATE_RATING',
+            payload: {
+                value: this.state.rating,
+                bookId: this.props.edit.id
+            }
+        })
+        this.props.dispatch({
+            type: 'UPDATE_CURRENT',
+            payload: {
+                currently_reading: this.state.current,
+                bookId: this.props.edit.id
+            }
+        })
+        this.props.dispatch({
+            type: 'UPDATE_WISH',
+            payload: {
+                wish_list: this.state.wish,
+                bookId: this.props.edit.id
+            }
+        })
+        this.props.dispatch({
+            type: 'UPDATE_NOPE',
+            payload: {
+                nope_list: this.state.nope,
+                bookId: this.props.edit.id
+            }
+        })
+        this.props.history.goBack();
     }
 
     removeBookFromLibrary = (id) => {
@@ -94,22 +136,23 @@ class EditBook extends Component {
             type: 'DELETE_BOOK',
             payload: { bookIdToDelete: id }
         })
+        this.props.history.goBack();
     }
 
     changeRating = (event) => {
-        console.log('changing rating of book id, value:', event.target.value, this.props.edit.id);
-        this.props.dispatch({
-            type: 'UPDATE_RATING',
-            payload: {
-                value: event.target.value,
-                bookId: this.props.edit.id
-            }
+        console.log('changing rating of book id, value:', this.props.edit.id, event.target.value, );
+        this.setState({
+            ...this.state,
+            rating: Number(event.target.value)
         })
     }
 
     handleToggleChange = (type) => (event) => {
         console.log('toggling:', type, 'to:', event.target.checked);
-
+        this.setState({
+            ...this.state,
+            [type]: event.target.checked
+        })
     }
 
     openNote = (note) => {
@@ -132,24 +175,24 @@ class EditBook extends Component {
         return (
             <div>
                 <h1 className={classes.title}>Edit Book</h1>
+                {/* {JSON.stringify(this.state)} */}
                 <Card className={classes.cardItem}  >
                     <div className={classes.topOfCard}>
-                        {/* <img className={classes.imageCard} src={this.props.edit.book_image_url} alt={this.props.edit.book_title} /> */}
                         <div className={classes.toggles}>
                             <FormControl component="fieldset" >
                                 <FormLabel component="legend">Sections</FormLabel>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Switch checked={this.props.edit.currently_reading} onChange={this.handleToggleChange('current')} value="current" size="small" />}
+                                        control={<Switch checked={this.state.current} onChange={this.handleToggleChange('current')} value="current" size="small" />}
                                         label="Current Reads"
                                     />
                                     <FormControlLabel
-                                        control={<Switch checked={this.props.edit.wish_list} onChange={this.handleToggleChange('wish')} value="wish" size="small" />}
+                                        control={<Switch checked={this.state.wish} onChange={this.handleToggleChange('wish')} value="wish" size="small" />}
                                         label="Wish List"
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Switch checked={this.props.edit.nope_list} onChange={this.handleToggleChange('nope')} value="nope" size="small" />
+                                            <Switch checked={this.state.nope} onChange={this.handleToggleChange('nope')} value="nope" size="small" />
                                         }
                                         label="NOPE List"
                                     />
@@ -162,7 +205,7 @@ class EditBook extends Component {
                         <p>Author(s): {this.props.edit.book_author}</p>
                         <Rating
                             name={JSON.stringify(this.props.edit.id)}
-                            value={this.props.edit.rating}
+                            value={this.state.rating}
                             onChange={(event) => this.changeRating(event)}
                         />
                         <p>Pages: {this.props.edit.page_total}</p>
@@ -192,7 +235,7 @@ class EditBook extends Component {
                             <h5 className={classes.title}>Tags</h5>
                         </div>
                         <div className={classes.removeButton}>
-                            <Button variant="contained" color="secondary" size="small">
+                            <Button variant="contained" color="secondary" size="small" onClick={() => this.removeBookFromLibrary(this.props.edit.id)}>
                                 Remove From Library
                             <DeleteIcon className={classes.rightIcon} />
                             </Button>

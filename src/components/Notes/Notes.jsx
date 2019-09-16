@@ -6,9 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+import EditIcon from '@material-ui/icons/Edit';
+
 
 
 const styles = theme => ({
@@ -38,13 +39,28 @@ const styles = theme => ({
 class Notes extends Component {
 
     state = {
-        inputOpen: false
+        inputOpen: false,
+        inputText: ''
+    }
+
+    componentDidMount() {
+        if (this.props.notesReducer.notesForBook) {
+            this.setState({
+                ...this.state,
+                inputText: this.props.notesReducer.notesForBook
+            })
+        }
+        
     }
 
     handleClose = () => {
         this.props.dispatch({
             type: 'CLOSE_NOTES'
         })
+    };
+
+    handleChange = (name) => (event) => {
+        this.setState({ ...this.state, [name]: event.target.value });
     };
 
     render() {
@@ -60,10 +76,35 @@ class Notes extends Component {
                 fullWidth={true}
                 className={classes.noteBox}
             >
-                <h5 className={classes.title} >Notes:</h5>
-                <p className={classes.noteText} >{this.props.notesReducer.notesForBook}</p>
+                <h5 className={classes.title}>Notes:</h5>
+
+                {this.state.inputOpen ? 
+                    <div>
+                        <TextField
+                            id="outlined-name"
+                            label="Notes"
+                            multiline
+                            rowsMax="4"
+                            className={classes.textField}
+                            value={this.state.inputText}
+                            onChange={this.handleChange('inputText')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                        <Button onClick={this.handleCancelEdit} variant="outlined" color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.handleSaveEdit} variant="outlined" color="primary">
+                            Save
+                        </Button>
+                    </div> :
+                    <p className={classes.noteText} >{this.props.notesReducer.notesForBook}</p>
+                }
                 
-                <Button onClick={this.handleClose} color="primary">
+                <IconButton aria-label="edit" size="small" onClick={() => this.setState({ ...this.state, inputOpen: !this.state.inputOpen })}>
+                    <EditIcon fontSize="inherit"  />
+                </IconButton>
+                <Button onClick={this.handleClose} color="primary" variant="contained">
                     Back
                 </Button>
             </Dialog>
