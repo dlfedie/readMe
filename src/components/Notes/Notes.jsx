@@ -25,16 +25,21 @@ const styles = theme => ({
         top: theme.spacing(1),
         color: theme.palette.grey[500],
     },
-    noteBox: {
+    noteText: {
         color: 'red',
-        textColor: 'red',
-        
+        textAlign: 'center',
+
     },
+    title: {
+        textAlign: 'center',
+    }
 })
 
 class Notes extends Component {
 
-
+    state = {
+        inputOpen: false
+    }
 
     handleClose = () => {
         this.props.dispatch({
@@ -51,33 +56,16 @@ class Notes extends Component {
                 onClose={this.handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={this.props.notesReducer.notesOpen}
+                maxWidth="md"
+                fullWidth={true}
                 className={classes.noteBox}
             >
-                <h5>Notes:</h5>
-                <p>{this.props.notesReducer.notesForBook}</p>
-                {/* <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            Modal title
-            </DialogTitle>
-            <DialogContent dividers>
-                <Typography gutterBottom>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                    in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                </Typography>
-                <Typography gutterBottom>
-                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                    lacus vel augue laoreet rutrum faucibus dolor auctor.
-                </Typography>
-                <Typography gutterBottom>
-                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                    scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                    auctor fringilla.
-                </Typography>
-            </DialogContent> */}
-                {/* <DialogActions> */}
+                <h5 className={classes.title} >Notes:</h5>
+                <p className={classes.noteText} >{this.props.notesReducer.notesForBook}</p>
+                
                 <Button onClick={this.handleClose} color="primary">
                     Back
                 </Button>
-                {/* </DialogActions> */}
             </Dialog>
         )
     }
