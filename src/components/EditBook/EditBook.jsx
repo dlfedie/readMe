@@ -95,7 +95,6 @@ class EditBook extends Component {
     cancelEdit = () => {
         console.log('clicked cancel button');
         this.props.history.goBack();
-
     }
 
     saveEdit = () => {
@@ -129,7 +128,6 @@ class EditBook extends Component {
             }
         })
         this.props.history.goBack();
-
     }
 
     removeBookFromLibrary = (id) => {
@@ -138,6 +136,7 @@ class EditBook extends Component {
             type: 'DELETE_BOOK',
             payload: { bookIdToDelete: id }
         })
+        this.props.history.goBack();
     }
 
     changeRating = (event) => {
@@ -146,7 +145,6 @@ class EditBook extends Component {
             ...this.state,
             rating: Number(event.target.value)
         })
-        
     }
 
     handleToggleChange = (type) => (event) => {
@@ -155,7 +153,6 @@ class EditBook extends Component {
             ...this.state,
             [type]: event.target.checked
         })
-
     }
 
     openNote = (note) => {
@@ -178,10 +175,9 @@ class EditBook extends Component {
         return (
             <div>
                 <h1 className={classes.title}>Edit Book</h1>
-                {JSON.stringify(this.state)}
+                {/* {JSON.stringify(this.state)} */}
                 <Card className={classes.cardItem}  >
                     <div className={classes.topOfCard}>
-                        {/* <img className={classes.imageCard} src={this.props.edit.book_image_url} alt={this.props.edit.book_title} /> */}
                         <div className={classes.toggles}>
                             <FormControl component="fieldset" >
                                 <FormLabel component="legend">Sections</FormLabel>
@@ -239,7 +235,7 @@ class EditBook extends Component {
                             <h5 className={classes.title}>Tags</h5>
                         </div>
                         <div className={classes.removeButton}>
-                            <Button variant="contained" color="secondary" size="small">
+                            <Button variant="contained" color="secondary" size="small" onClick={() => this.removeBookFromLibrary(this.props.edit.id)}>
                                 Remove From Library
                             <DeleteIcon className={classes.rightIcon} />
                             </Button>
