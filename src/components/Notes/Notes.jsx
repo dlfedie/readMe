@@ -91,10 +91,10 @@ class Notes extends Component {
                             margin="normal"
                             variant="outlined"
                         />
-                        <Button onClick={this.handleCancelEdit} color="secondary">
+                        <Button onClick={this.handleCancelEdit} variant="outlined" color="secondary">
                             Cancel
                         </Button>
-                        <Button onClick={this.handleSaveEdit} color="primary">
+                        <Button onClick={this.handleSaveEdit} variant="outlined" color="primary">
                             Save
                         </Button>
                     </div> :
@@ -104,7 +104,7 @@ class Notes extends Component {
                 <IconButton aria-label="edit" size="small" onClick={() => this.setState({ ...this.state, inputOpen: !this.state.inputOpen })}>
                     <EditIcon fontSize="inherit"  />
                 </IconButton>
-                <Button onClick={this.handleClose} color="primary">
+                <Button onClick={this.handleClose} color="primary" variant="contained">
                     Back
                 </Button>
             </Dialog>
