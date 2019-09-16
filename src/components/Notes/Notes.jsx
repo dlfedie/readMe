@@ -25,11 +25,16 @@ const styles = theme => ({
         top: theme.spacing(1),
         color: theme.palette.grey[500],
     },
+    noteBox: {
+        color: 'red',
+        textColor: 'red',
+        
+    },
 })
 
 class Notes extends Component {
 
-    
+
 
     handleClose = () => {
         this.props.dispatch({
@@ -42,10 +47,15 @@ class Notes extends Component {
         const { classes } = this.props;
 
         return (
-            <Dialog onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.props.notesReducer.notesOpen}>
-            <h5>Notes:</h5>
+            <Dialog
+                onClose={this.handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={this.props.notesReducer.notesOpen}
+                className={classes.noteBox}
+            >
+                <h5>Notes:</h5>
                 <p>{this.props.notesReducer.notesForBook}</p>
-            {/* <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
+                {/* <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
             Modal title
             </DialogTitle>
             <DialogContent dividers>
@@ -63,12 +73,12 @@ class Notes extends Component {
                     auctor fringilla.
                 </Typography>
             </DialogContent> */}
-        {/* <DialogActions> */}
-          <Button onClick={this.handleClose} color="primary">
-            Back
-          </Button>
-        {/* </DialogActions> */}
-      </Dialog>
+                {/* <DialogActions> */}
+                <Button onClick={this.handleClose} color="primary">
+                    Back
+                </Button>
+                {/* </DialogActions> */}
+            </Dialog>
         )
     }
 }
