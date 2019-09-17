@@ -67,18 +67,19 @@ router.get('/notes/:id', rejectUnauthenticated, (req, res) => {
 
 
 //specific GET for an edit page change (mainly only after updating a note)
-router.get('/edit/:id', rejectUnauthenticated, (req, res) => {
-    const id = req.params.id;
-    console.log('in edit ID get:', id);
-    const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
-    pool.query(queryText, [id])
-        .then(result => {
-            res.send(result.rows[0]);
-        }).catch(err => {
-            console.log('error in edit id GET:', err);
-            res.sendStatus(500);
-        })
-})
+//bailed on this, as it was having issues updating redux/etc. i'll just have the note on the page stay wrong; user sees edited note after update
+// router.get('/edit/:id', rejectUnauthenticated, (req, res) => {
+//     const id = req.params.id;
+//     console.log('in edit ID get:', id);
+//     const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
+//     pool.query(queryText, [id])
+//         .then(result => {
+//             res.send(result.rows[0]);
+//         }).catch(err => {
+//             console.log('error in edit id GET:', err);
+//             res.sendStatus(500);
+//         })
+// })
 
 //PUT for note update
 router.put('/notes', rejectUnauthenticated, (req, res) => {

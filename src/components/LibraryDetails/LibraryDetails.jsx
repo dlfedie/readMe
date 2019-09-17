@@ -6,6 +6,8 @@ import Rating from '@material-ui/lab/Rating';
 
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 
 
 const styles = theme => ({
@@ -35,21 +37,23 @@ const styles = theme => ({
         display: 'center',
         textAlign: 'center'
     },
-    titleCard: {
-        // display: 'left',
-        // textAlign: 'left',
+    textNextToImage: {
+        paddingLeft: '8px'
     },
     imageCard: {
-        justifyContent: 'right',
-        float: 'right',
-        // float: 'top',
-        padding: '10px'
-        // position: 'absolute',
-        // right: '0px'
+        padding: '8px'
     },
     summaryText: {
         maxHeight: 200,
-        overflow: 'auto'
+        overflow: 'auto',
+        padding: '8px'
+    },
+    notesText: {
+        padding: '8px'
+    },
+    backButton: {
+        justifyContent: 'center',
+        margin: '8px'
     }
 
 });
@@ -61,7 +65,7 @@ class LibraryDetails extends Component {
             type: 'GET_DETAILS',
             payload: this.props.match.params.id
         })
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
         this.props.dispatch({
             type: 'SET_BOOK_CLICKED',
             payload: this.props.match.params.id
@@ -77,17 +81,23 @@ class LibraryDetails extends Component {
                 <h1 className={classes.title}>Book Details</h1>
                 <Card className={classes.cardItem}  >
                     <div className={classes.topOfCard}>
-                        <img className={classes.imageCard} src={this.props.book.book_image_url} alt={this.props.book.book_title} />
-
-                        <h4>{this.props.book.book_title}</h4>
-                        <h5>{this.props.book.book_subtitle}</h5>
-                        <p>Author(s): {this.props.book.book_author}</p>
-                        <Rating
-                            name={JSON.stringify(this.props.book.id)}
-                            value={this.props.book.rating}
-                            readOnly
-                        />
-                        <p>Pages: {this.props.book.page_total}</p>
+                        <Grid container spacing={1} justify={'space-evenly'} alignItems={'center'} direction={'row'}>
+                            <Grid item xs className={classes.imageCard}>
+                                <h4 className={classes.textNextToImage}>{this.props.book.book_title}</h4>
+                                <h5 className={classes.textNextToImage}>{this.props.book.book_subtitle}</h5>
+                                <p className={classes.textNextToImage}>Author(s): {this.props.book.book_author}</p>
+                                <Rating
+                                    name={JSON.stringify(this.props.book.id)}
+                                    value={this.props.book.rating}
+                                    readOnly
+                                    className={classes.textNextToImage}
+                                />
+                                <p className={classes.textNextToImage}>Pages: {this.props.book.page_total}</p>
+                            </Grid>
+                            <Grid item xs>
+                                <img className={classes.imageCard} src={this.props.book.book_image_url} alt={this.props.book.book_title} />
+                            </Grid>
+                        </Grid>
                     </div>
                     <div className={classes.summaryText}>
                         <h5 className={classes.title}>Summary</h5>
@@ -97,8 +107,13 @@ class LibraryDetails extends Component {
                         <h5 className={classes.title}>Notes</h5>
                         <p>{this.props.book.notes}</p>
                     </div>
-                    <Button variant="contained" size="small" color="primary" onClick={() => this.props.history.goBack()}>
-                        Back
+                    <Button 
+                        variant="contained" 
+                        size="small" 
+                        color="primary"
+                        className={classes.backButton}
+                        onClick={() => this.props.history.goBack()}>
+                            Back
                     </Button>
                 </Card>
             </div>
