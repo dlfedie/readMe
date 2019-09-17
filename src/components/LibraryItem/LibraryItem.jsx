@@ -15,7 +15,8 @@ import IconButton from '@material-ui/core/IconButton';
 import NoteIcon from '@material-ui/icons/Note';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import Grid from '@material-ui/core/Grid';
-
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 
 const styles = theme => ({
@@ -39,6 +40,10 @@ const styles = theme => ({
     },
     centerMe: {
         textAlign: 'center'
+    },
+    ratingHeader: {
+        textAlign: 'center',
+        color: 'blue'
     },
     padMe: {
         paddingLeft: '5%'
@@ -100,6 +105,22 @@ class LibraryItem extends Component {
         })
     }
 
+    rankUp = (id) => {
+        console.log('clicked on rank up of book id:', id);
+        this.props.dispatch({
+            type: 'RANK_UP_WISH',
+            payload: id
+        })
+    }
+
+    rankDown = (id) => {
+        console.log('clicked on rank down of book id:', id);
+        this.props.dispatch({
+            type: 'RANK_DOWN_WISH',
+            payload: id
+        })
+    }
+
 
     render() {
         const { classes } = this.props;
@@ -115,6 +136,25 @@ class LibraryItem extends Component {
                     <div className={classes.imageAndRating}>
                         <img src={this.props.book.book_image_url} alt={this.props.book.book_title} className={classes.padMe} />
                         <Grid container direction={'column'} justify={'center'} alignItems={'center'}>
+                                {this.props.history.location.pathname === '/wishlist' &&
+                                <Grid item className={classes.rankings}>
+                                    <h5 className={classes.ratingHeader}>Wish List Rank: {this.props.book.wish_rank}</h5>
+                                    <IconButton 
+                                        aria-label="rankUp"
+                                        className={classes.notes}
+                                        onClick={() => this.rankUp(this.props.book.id)}
+                                    >
+                                        <ArrowUpwardIcon fontSize="small" />
+                                    </IconButton>
+                                    <span> change rank </span>
+                                    <IconButton
+                                        aria-label="rankUp"
+                                        className={classes.notes}
+                                        onClick={() => this.rankDown(this.props.book.id)}
+                                    >
+                                        <ArrowDownwardIcon fontSize="small" />
+                                    </IconButton>
+                                </Grid>}
                                 <Grid item>
                                     <Rating
                                         name={JSON.stringify(this.props.book.id)}

@@ -37,14 +37,15 @@ const bookOnReducer = (state = '', action) => {
     }
 }
 
-// const notesForBook = (state = '', action) => {
-//     switch (action.type) {
-//         case 'SET_BOOK_NOTES':
-//             return action.payload.notes
-//         default:
-//             return state
-//     }
-// }
+const wishListReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_WISH_LIST':
+            return action.payload
+        default:
+            return state
+    }
+}
+
 
 
 export default combineReducers({
@@ -52,4 +53,5 @@ export default combineReducers({
     detailsReducer,
     bookOnReducer,
     editBookReducer,
+    wishListReducer
 });
