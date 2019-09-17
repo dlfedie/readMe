@@ -100,7 +100,8 @@ class MyLibrary extends Component {
 const mapStateToProps = (reduxStore) => {
     return {
         library: reduxStore.library.libraryReducer,
-        bookOn: reduxStore.library.bookOnReducer
+        bookOn: reduxStore.library.bookOnReducer,
+        user: reduxStore.user
     }
 }
 

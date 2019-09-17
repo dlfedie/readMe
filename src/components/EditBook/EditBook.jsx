@@ -260,7 +260,8 @@ class EditBook extends Component {
 const mapStateToProps = (reduxStore) => {
     return {
         edit: reduxStore.library.editBookReducer,
-        notesReducer: reduxStore.notes
+        notesReducer: reduxStore.notes,
+        user: reduxStore.user
     }
 }
 

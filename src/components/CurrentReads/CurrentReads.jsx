@@ -1,26 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import LogOutButton from '../LogOutButton/LogOutButton';
+import LibraryItem from '../LibraryItem/LibraryItem';
+import Notes from '../Notes/Notes';
 
-// this could also be written with destructuring parameters as:
-// const UserPage = ({ user }) => (
-// and then instead of `props.user.username` you could use `user.username`
-const CurrentReads = (props) => (
-  <div>
-    {/* <h1 id="welcome">
-      Welcome, { props.user.username }!
-    </h1> */}
-    <h1>Current Reads:</h1>
-    {/* <LogOutButton className="log-in" /> */}
-  </div>
-);
+//material ui
+import 'typeface-roboto';
+import { withStyles } from '@material-ui/core/styles';
 
-// Instead of taking everything from state, we just want the user info.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({user}) => ({ user });
-const mapStateToProps = state => ({
-  user: state.user,
+import GridList from '@material-ui/core/GridList';
+
+
+const styles = theme => ({
+
+    fab: {
+        margin: theme.spacing(1),
+    },
+    root: {
+        flexGrow: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+    },
+    gridList: {
+        width: '90%',
+        height: 'auto',
+        justifyContent: 'center',
+        display: 'flex',
+        spacing: 1,
+    },
+    tileItem: {
+        borderColor: 'text.primary',
+        height: 'auto',
+        width: '90%',
+        border: 1,
+        borderStyle: 'solid',
+        margin: theme.spacing(1),
+        justifyContent: 'center',
+
+    }
+
 });
 
-// this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(CurrentReads);
+
+class CurrentReads extends Component {
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <h1>Currently Beef</h1>
+        )
+    }
+}
+
+const mapStateToProps = reduxStore => ({
+    user: reduxStore.user,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(CurrentReads));
