@@ -64,25 +64,33 @@ class Notes extends Component {
     };
 
     handleChange = (name) => (event) => {
-        this.setState({ ...this.state, [name]: event.target.value });
+        console.log('typing in input');
+        this.props.dispatch({
+            type: 'EDIT_NOTES',
+            payload: event.target.value
+        })
     };
 
     handleCancelEdit = () => {
         console.log('clicked cancel');
-        
-        // if (this.props.notesReducer.notesForBook) {
-        //     this.setState({
-        //         ...this.state,
-        //         inputText: this.props.notesReducer.notesForBook,
-        //         inputOpen: false
-        //     })
-        // } else {
-        //     this.setState({
-        //         ...this.state,
-        //         inputText: '',
-        //         inputOpen: false
-        //     })
-        // }
+        let bookId = this.props.notesReducer.notesForBook.bookId
+        console.log(bookId);
+        this.props.dispatch({
+            type: 'GET_NOTES',
+            payload: bookId
+        })
+        this.setState({ inputOpen: !this.state.inputOpen })
+    }
+
+    handleSaveEdit = () => {
+        console.log('clicked save');
+        // let bookId = this.props.notesReducer.notesForBook.bookId
+
+        this.props.dispatch({
+            type: 'UPDATE_NOTES',
+            payload: this.props.notesReducer.notesForBook
+        })
+        this.setState({ inputOpen: !this.state.inputOpen })
     }
 
     render() {
@@ -134,7 +142,7 @@ class Notes extends Component {
                     <p className={classes.noteText} >{this.props.notesReducer.notesForBook.notes}</p>
                 }
 
-                <IconButton aria-label="edit" size="small" className={classes.editButton} onClick={() => this.setState({ ...this.state, inputOpen: !this.state.inputOpen })}>
+                <IconButton aria-label="edit" size="small" className={classes.editButton} onClick={() => this.setState({ inputOpen: !this.state.inputOpen })}>
                     <EditIcon fontSize="inherit" />
                 </IconButton>
                 <Button onClick={this.handleClose} color="primary" variant="contained">

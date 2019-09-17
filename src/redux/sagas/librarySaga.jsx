@@ -105,6 +105,38 @@ function* getDetails(action) {
     }
 }
 
+function* getNotes(action) {
+    try {
+        yield console.log('in getNotes:', action.payload);
+        let getNotesResponse = yield axios.get(`/api/library/notes/${action.payload}`);
+        yield put({
+            type: 'SET_BOOK_NOTES',
+            payload: getNotesResponse.data
+        })
+    } catch(err) {
+        console.log('error in getNotes', err)
+    }
+}
+
+function* updateNotes(action) {
+    try {
+        yield console.log('in editNotes:', action.payload);
+        let bookId = action.payload.bookId
+        yield axios.put('/api/library/notes', action.payload);
+        yield put({
+            type: 'GET_NOTES',
+            payload: bookId
+        })
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+
+    } catch(err) {
+        console.log('error in editNotes:', err);
+        
+    }
+}
+
 function* librarySaga() {
     yield takeLatest('ADD_BOOK_TO_LIBRARY', addBookToLibrary);
     yield takeLatest('FETCH_LIBRARY', fetchLibrary);
@@ -114,6 +146,8 @@ function* librarySaga() {
     yield takeLatest('UPDATE_CURRENT', updateCurrent);
     yield takeLatest('UPDATE_WISH', updateWish);
     yield takeLatest('UPDATE_NOPE', updateNope);
+    yield takeLatest('GET_NOTES', getNotes);
+    yield takeLatest('UPDATE_NOTES', updateNotes);
     
 }
 
