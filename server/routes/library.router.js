@@ -23,7 +23,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 //specific GET
-router.get('/:id', rejectUnauthenticated, (req, res) => {
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     const id = req.params.id;
     console.log('in specific ID get:', id);
     const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
@@ -36,6 +36,21 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         })
 })
 
+router.get('/wishlist', rejectUnauthenticated, (req, res) => {
+    console.log('in library wishlist GET');
+    //go get all books in user's wishlist in DB
+    const queryText = `SELECT * FROM "books" WHERE "user_id" = $1 AND "wish_list" = TRUE ORDER BY "wish_rank" DESC;`;
+    const user = req.user.id;
+    pool.query(queryText, [user])
+        .then(result => {
+            console.log('successful user library GET', result.rows);
+            res.send(result.rows);
+        }).catch(err => {
+            console.log('error in library GET:', err);
+            res.sendStatus(500);
+        })
+});
+
 //specific NOTES GET
 router.get('/notes/:id', rejectUnauthenticated, (req, res) => {
     const id = req.params.id;
@@ -46,6 +61,21 @@ router.get('/notes/:id', rejectUnauthenticated, (req, res) => {
             res.send(result.rows[0]);
         }).catch(err => {
             console.log('error in specific id GET:', err);
+            res.sendStatus(500);
+        })
+})
+
+
+//specific GET for an edit page change (mainly only after updating a note)
+router.get('/edit/:id', rejectUnauthenticated, (req, res) => {
+    const id = req.params.id;
+    console.log('in edit ID get:', id);
+    const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            res.send(result.rows[0]);
+        }).catch(err => {
+            console.log('error in edit id GET:', err);
             res.sendStatus(500);
         })
 })
@@ -66,6 +96,71 @@ router.put('/notes', rejectUnauthenticated, (req, res) => {
             if (result.rows[0].user_id === req.user.id) {
                 const queryText = `UPDATE "books" SET "notes" = $1 WHERE "id" = $2;`;
                 pool.query(queryText, [notes, bookToUpdate])
+                    .then(result => {
+                        res.sendStatus(200);
+                    }).catch(err => {
+                        console.log('error in rating update try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to update a book that's not theirs
+                res.sendStatus(403);
+            }
+        }).catch(err => {
+            console.log('error in rating update auth check:', err);
+            res.sendStatus(500);
+        })
+})
+
+
+//rankup wish PUT
+router.put('/rankupwish', rejectUnauthenticated, (req, res) => {
+    console.log('attempting to update wish rank of id:', req.body);
+    const bookToUpdate = req.body.bookId;
+
+    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [bookToUpdate])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `UPDATE "books" SET "wish_rank" = wish_rank + 1 WHERE "id" = $1;`;
+                pool.query(queryText, [bookToUpdate])
+                    .then(result => {
+                        res.sendStatus(200);
+                    }).catch(err => {
+                        console.log('error in rating update try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to update a book that's not theirs
+                res.sendStatus(403);
+            }
+        }).catch(err => {
+            console.log('error in rating update auth check:', err);
+            res.sendStatus(500);
+        })
+})
+
+
+
+//rankdown wish PUT
+router.put('/rankdownwish', rejectUnauthenticated, (req, res) => {
+    console.log('attempting to update down the wish rank of id:', req.body);
+    const bookToUpdate = req.body.bookId;
+
+    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [bookToUpdate])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `UPDATE "books" SET "wish_rank" = wish_rank - 1 WHERE "id" = $1;`;
+                pool.query(queryText, [bookToUpdate])
                     .then(result => {
                         res.sendStatus(200);
                     }).catch(err => {

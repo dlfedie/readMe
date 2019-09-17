@@ -205,7 +205,7 @@ class EditBook extends Component {
                         <h5>{this.props.edit.book_subtitle}</h5>
                         <p>Author(s): {this.props.edit.book_author}</p>
                         <Rating
-                            name={JSON.stringify(this.props.edit.id)}
+                            name={this.props.edit.book_id_on_google}
                             value={this.state.rating}
                             onChange={(event) => this.changeRating(event)}
                         />

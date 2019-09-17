@@ -90,6 +90,11 @@ class Notes extends Component {
             type: 'UPDATE_NOTES',
             payload: this.props.notesReducer.notesForBook
         })
+        //this below will actually make the edit and details page update if a user is editing notes from that page.
+        // this.props.dispatch({
+        //     type: 'FETCH_EDITS',
+        //     payload: {id: bookId}
+        // })
         this.setState({ inputOpen: !this.state.inputOpen })
     }
 

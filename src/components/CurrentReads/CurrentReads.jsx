@@ -77,6 +77,7 @@ class CurrentReads extends Component {
             )
         })
 
+
         return (
             <div className={classes.root}>
                 <h1 id="topOfPage">Current Reads</h1>
