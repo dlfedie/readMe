@@ -97,7 +97,7 @@ class LibraryDetails extends Component {
                         <h5 className={classes.title}>Notes</h5>
                         <p>{this.props.book.notes}</p>
                     </div>
-                    <Button variant="contained" size="small" color="primary" onClick={()=> this.props.history.push('/library')}>
+                    <Button variant="contained" size="small" color="primary" onClick={() => this.props.history.goBack()}>
                         Back
                     </Button>
                 </Card>

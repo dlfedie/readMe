@@ -44,16 +44,61 @@ const styles = theme => ({
 
 
 class CurrentReads extends Component {
+
+    componentDidMount() {
+        this.getLibrary();
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: ''
+        })
+    }
+
+    getLibrary = () => {
+        this.props.dispatch({
+            type: 'FETCH_LIBRARY'
+        })
+        // window.scrollTo(0, this.props.history);
+        if (this.props.bookOn && this.props.library) {
+            document.getElementById(this.props.bookOn).scrollIntoView();
+        }
+        this.props.dispatch({
+            type: 'SET_BOOK_CLICKED',
+            payload: ''
+        })
+    }
+
     render() {
         const { classes } = this.props;
 
+        let libraryResults = this.props.library.map((book) => {
+            if(book.currently_reading)
+            return (
+                <LibraryItem book={book} key={book.id} className={classes.tileItem} />
+            )
+        })
+
         return (
-            <h1>Currently Beef</h1>
+            <div className={classes.root}>
+                <h1 id="topOfPage">Current Reads</h1>
+                {this.props.library &&
+                    <GridList
+                        cols={1}
+                        cellHeight={'auto'}
+                        spacing={15}
+                        className={classes.gridList}
+                    >
+                        {libraryResults}
+                    </GridList>}
+                <Notes />
+            </div>
+            
         )
     }
 }
 
 const mapStateToProps = reduxStore => ({
+    library: reduxStore.library.libraryReducer,
+    bookOn: reduxStore.library.bookOnReducer,
     user: reduxStore.user,
 });
 
