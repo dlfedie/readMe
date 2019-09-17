@@ -160,7 +160,8 @@ class EditBook extends Component {
         this.props.dispatch({
             type: 'SET_BOOK_NOTES',
             payload: {
-                notes: note
+                notes: note,
+                bookId: this.props.edit.id
             }
         })
         this.props.dispatch({

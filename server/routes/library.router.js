@@ -34,8 +34,54 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
             console.log('error in specific id GET:', err);
             res.sendStatus(500);
         })
-    
 })
+
+//specific NOTES GET
+router.get('/notes/:id', rejectUnauthenticated, (req, res) => {
+    const id = req.params.id;
+    console.log('in notes ID get:', id);
+    const queryText = `SELECT * FROM "books" WHERE "id" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            res.send(result.rows[0]);
+        }).catch(err => {
+            console.log('error in specific id GET:', err);
+            res.sendStatus(500);
+        })
+})
+
+//PUT for note update
+router.put('/notes', rejectUnauthenticated, (req, res) => {
+    console.log('attempting to update note:', req.body);
+    const bookToUpdate = req.body.bookId;
+    const notes = req.body.notes;
+
+    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [bookToUpdate])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `UPDATE "books" SET "notes" = $1 WHERE "id" = $2;`;
+                pool.query(queryText, [notes, bookToUpdate])
+                    .then(result => {
+                        res.sendStatus(200);
+                    }).catch(err => {
+                        console.log('error in rating update try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to update a book that's not theirs
+                res.sendStatus(403);
+            }
+        }).catch(err => {
+            console.log('error in rating update auth check:', err);
+            res.sendStatus(500);
+        })
+})
+
 
 /**
  * POST route template
