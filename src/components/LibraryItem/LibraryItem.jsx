@@ -11,6 +11,10 @@ import { withStyles } from '@material-ui/core/styles';
 import GridListTile from '@material-ui/core/GridListTile';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import NoteIcon from '@material-ui/icons/Note';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -42,7 +46,7 @@ const styles = theme => ({
     rating: {
         marginTop: 'auto',
         marginBottom: 'auto',
-        paddingLeft: '10%'
+        // paddingLeft: '10%'
     },
     imageAndRating: {
         display: 'flex'
@@ -59,24 +63,6 @@ const styles = theme => ({
 
 class LibraryItem extends Component {
 
-    // removeBookFromLibrary = (id) => {
-    //     console.log('clicked on delete for book ID:', id);
-    //     this.props.dispatch({
-    //         type: 'DELETE_BOOK',
-    //         payload: { bookIdToDelete: id }
-    //     })
-    // }
-
-    // changeRating = (event) => {
-    //     console.log('changing rating of book id, value:', event.target.value, this.props.book.id);
-    //     this.props.dispatch({
-    //         type: 'UPDATE_RATING',
-    //         payload: {
-    //             value: event.target.value,
-    //             bookId: this.props.book.id
-    //         }
-    //     })
-    // }
 
     getBookDetails = (id) => {
         console.log('clicked on book ID:', id);
@@ -100,11 +86,26 @@ class LibraryItem extends Component {
         this.props.history.push(`/editbook/${book.id}`);
     }
 
+    openNote = (note) => {
+        console.log('clicked on a note icon', note);
+        this.props.dispatch({
+            type: 'SET_BOOK_NOTES',
+            payload: {
+                notes: note,
+                bookId: this.props.book.id
+            }
+        })
+        this.props.dispatch({
+            type: 'OPEN_NOTES'
+        })
+    }
+
 
     render() {
         const { classes } = this.props;
 
         return (
+            <>
             <GridListTile key={this.props.book.id} id={this.props.book.id} cols={1} rows={1} className={classes.tileItem}  >
                 <div>
                     <div>
@@ -113,13 +114,35 @@ class LibraryItem extends Component {
                     </div>
                     <div className={classes.imageAndRating}>
                         <img src={this.props.book.book_image_url} alt={this.props.book.book_title} className={classes.padMe} />
-                        <Rating
-                            name={JSON.stringify(this.props.book.id)}
-                            value={this.props.book.rating}
-                            readOnly
-                            className={classes.rating}
-                        // onChange={(event) => this.changeRating(event)}
-                        />
+                        <Grid container direction={'column'} justify={'center'} alignItems={'center'}>
+                                <Grid item>
+                                    <Rating
+                                        name={JSON.stringify(this.props.book.id)}
+                                        value={this.props.book.rating}
+                                        readOnly
+                                        className={classes.rating}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    {this.props.book.notes ?
+                                        <IconButton
+                                            aria-label="note"
+                                            className={classes.notes}
+                                            onClick={() => this.openNote(this.props.book.notes)}
+                                        >
+                                            <NoteIcon fontSize="small" />
+                                        </IconButton> :
+                                        <IconButton
+                                            aria-label="noteAdd"
+                                            className={classes.notes}
+                                            onClick={() => this.openNote(this.props.book.notes)}
+                                        >
+                                            <NoteAddIcon fontSize="small" />
+                                        </IconButton>
+                                    }
+                                </Grid>
+                        </Grid>
+                        
                     </div>
                     <div className={classes.padMe}>
                         <p>Author(s): {this.props.book.book_author}</p>
@@ -145,6 +168,7 @@ class LibraryItem extends Component {
                     </div>
                 </div>
             </GridListTile>
+            </>
         )
     }
 }

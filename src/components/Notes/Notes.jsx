@@ -9,6 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -19,12 +20,16 @@ const styles = theme => ({
     root: {
         margin: 0,
         padding: theme.spacing(2),
+        backgroundColor: 'transparent'
     },
     closeButton: {
         position: 'absolute',
         right: theme.spacing(1),
         top: theme.spacing(1),
         color: theme.palette.grey[500],
+    },
+    noteBox: {
+        backgroundColor: 'transparent'
     },
     noteText: {
         color: 'red',
@@ -33,6 +38,12 @@ const styles = theme => ({
     },
     title: {
         textAlign: 'center',
+    },
+    buttons: {
+        padding: '1%'
+    },
+    editButton: {
+        padding: '7%'
     }
 })
 
@@ -40,28 +51,39 @@ class Notes extends Component {
 
     state = {
         inputOpen: false,
-        inputText: ''
     }
 
-    componentDidMount() {
-        if (this.props.notesReducer.notesForBook) {
-            this.setState({
-                ...this.state,
-                inputText: this.props.notesReducer.notesForBook
-            })
-        }
-        
-    }
 
     handleClose = () => {
         this.props.dispatch({
             type: 'CLOSE_NOTES'
+        })
+        this.setState({
+            inputOpen: false,
         })
     };
 
     handleChange = (name) => (event) => {
         this.setState({ ...this.state, [name]: event.target.value });
     };
+
+    handleCancelEdit = () => {
+        console.log('clicked cancel');
+        
+        // if (this.props.notesReducer.notesForBook) {
+        //     this.setState({
+        //         ...this.state,
+        //         inputText: this.props.notesReducer.notesForBook,
+        //         inputOpen: false
+        //     })
+        // } else {
+        //     this.setState({
+        //         ...this.state,
+        //         inputText: '',
+        //         inputOpen: false
+        //     })
+        // }
+    }
 
     render() {
 
@@ -77,32 +99,43 @@ class Notes extends Component {
                 className={classes.noteBox}
             >
                 <h5 className={classes.title}>Notes:</h5>
+                {/* {JSON.stringify(this.state)} */}
 
-                {this.state.inputOpen ? 
+                {this.state.inputOpen ?
                     <div>
-                        <TextField
-                            id="outlined-name"
-                            label="Notes"
-                            multiline
-                            rowsMax="4"
-                            className={classes.textField}
-                            value={this.state.inputText}
-                            onChange={this.handleChange('inputText')}
-                            margin="normal"
-                            variant="outlined"
-                        />
-                        <Button onClick={this.handleCancelEdit} variant="outlined" color="secondary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleSaveEdit} variant="outlined" color="primary">
-                            Save
-                        </Button>
+                        <Grid container spacing={2} justify={'space-around'} alignItems={'center'} direction={'column'}>
+                            <Grid item>
+                                <TextField
+                                    id="outlined-name"
+                                    label="Notes"
+                                    multiline
+                                    rowsMax="4"
+                                    className={classes.textField}
+                                    value={this.props.notesReducer.notesForBook.notes ? this.props.notesReducer.notesForBook.notes : ''}
+                                    onChange={this.handleChange('inputText')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item container spacing={2} justify={'center'} alignItems={'center'} direction={'row'}>
+                                <Grid item>
+                                    <Button onClick={() => this.handleCancelEdit()} variant="outlined" color="secondary" className={classes.buttons}>
+                                        Cancel
+                                    </Button>
+                                </Grid>    
+                                <Grid item>
+                                    <Button onClick={() => this.handleSaveEdit()} variant="outlined" color="primary" className={classes.buttons}>
+                                        Save
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </div> :
-                    <p className={classes.noteText} >{this.props.notesReducer.notesForBook}</p>
+                    <p className={classes.noteText} >{this.props.notesReducer.notesForBook.notes}</p>
                 }
-                
-                <IconButton aria-label="edit" size="small" onClick={() => this.setState({ ...this.state, inputOpen: !this.state.inputOpen })}>
-                    <EditIcon fontSize="inherit"  />
+
+                <IconButton aria-label="edit" size="small" className={classes.editButton} onClick={() => this.setState({ ...this.state, inputOpen: !this.state.inputOpen })}>
+                    <EditIcon fontSize="inherit" />
                 </IconButton>
                 <Button onClick={this.handleClose} color="primary" variant="contained">
                     Back
