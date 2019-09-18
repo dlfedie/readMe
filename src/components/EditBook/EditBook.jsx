@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-import Notes from '../Notes/Notes'
+import Notes from '../Notes/Notes';
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -74,7 +74,6 @@ class EditBook extends Component {
         current: false,
         wish: false,
         nope: false,
-
     }
 
     componentDidMount() {
@@ -103,30 +102,35 @@ class EditBook extends Component {
             type: 'UPDATE_RATING',
             payload: {
                 value: this.state.rating,
-                bookId: this.props.edit.id
-            }
-        })
-        this.props.dispatch({
-            type: 'UPDATE_CURRENT',
-            payload: {
                 currently_reading: this.state.current,
-                bookId: this.props.edit.id
-            }
-        })
-        this.props.dispatch({
-            type: 'UPDATE_WISH',
-            payload: {
                 wish_list: this.state.wish,
-                bookId: this.props.edit.id
-            }
-        })
-        this.props.dispatch({
-            type: 'UPDATE_NOPE',
-            payload: {
                 nope_list: this.state.nope,
                 bookId: this.props.edit.id
             }
         })
+
+        //i'm a fool and did all of this separately... doesn't need to be.
+        // this.props.dispatch({
+        //     type: 'UPDATE_CURRENT',
+        //     payload: {
+        //         currently_reading: this.state.current,
+        //         bookId: this.props.edit.id
+        //     }
+        // })
+        // this.props.dispatch({
+        //     type: 'UPDATE_WISH',
+        //     payload: {
+        //         wish_list: this.state.wish,
+        //         bookId: this.props.edit.id
+        //     }
+        // })
+        // this.props.dispatch({
+        //     type: 'UPDATE_NOPE',
+        //     payload: {
+        //         nope_list: this.state.nope,
+        //         bookId: this.props.edit.id
+        //     }
+        // })
         this.props.history.goBack();
     }
 

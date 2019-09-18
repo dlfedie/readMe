@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+// import LogOutButton from '../LogOutButton/LogOutButton';
+
+
 
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -39,6 +44,16 @@ class Menu extends Component {
         this.setState({ ...this.state, [side]: open });
     };
 
+    goToAbout = () => {
+        console.log('clicked about');
+        this.props.history.push('/about');
+    }
+
+    goToTags = () => {
+        console.log('clicked tags');
+        this.props.history.push('/tags');
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -61,28 +76,37 @@ class Menu extends Component {
                         onKeyDown={this.toggleDrawer('left', false)}
                     >
                         <List>
-                            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            ))}
+                            <ListItem button key={'tags'} onClick={() => this.goToTags()}>
+                                <ListItemIcon>
+                                    <MailIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Tags'} />
+                            </ListItem>
                         </List>
                         <Divider />
                         <List>
-                            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            ))}
+                            <ListItem button key={'about'} onClick={() => this.goToAbout()}>
+                                <ListItemIcon>
+                                    <MailIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'About'}/>
+                            </ListItem>
+                            <ListItem button key={'login'} onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
+                                <ListItemIcon>
+                                    <InboxIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Logout'} />
+                            </ListItem>
                         </List>
                     </div>
-                    {/* {sideList('left')} */}
                 </Drawer>
             </>
         )
     }
 }
 
-export default (withStyles(styles)(Menu));
+const mapStateToProps = state => ({
+    user: state.user,
+});
+
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Menu)));
