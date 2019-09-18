@@ -74,7 +74,7 @@ class CurrentReads extends Component {
             if(book.currently_reading)
             return (
                 <LibraryItem book={book} key={book.id} className={classes.tileItem} />
-            )
+            ); else return false
         })
 
 

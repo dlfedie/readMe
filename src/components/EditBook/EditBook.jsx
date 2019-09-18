@@ -184,16 +184,16 @@ class EditBook extends Component {
                                 <FormLabel component="legend">Sections</FormLabel>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Switch checked={this.state.current} onChange={this.handleToggleChange('current')} value="current" size="small" />}
+                                        control={<Switch checked={this.state.current ? this.state.current : false} onChange={this.handleToggleChange('current')} value="current" size="small" />}
                                         label="Current Reads"
                                     />
                                     <FormControlLabel
-                                        control={<Switch checked={this.state.wish} onChange={this.handleToggleChange('wish')} value="wish" size="small" />}
+                                        control={<Switch checked={this.state.wish ? this.state.wish : false} onChange={this.handleToggleChange('wish')} value="wish" size="small" />}
                                         label="Wish List"
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Switch checked={this.state.nope} onChange={this.handleToggleChange('nope')} value="nope" size="small" />
+                                            <Switch checked={this.state.nope ? this.state.nope : false} onChange={this.handleToggleChange('nope')} value="nope" size="small" />
                                         }
                                         label="NOPE List"
                                     />
