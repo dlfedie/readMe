@@ -10,10 +10,6 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import Grid from '@material-ui/core/Grid';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 
@@ -22,13 +18,19 @@ const styles = theme => ({
         color: 'blue',
     },
     root: {
-        // margin: 0,
-        // padding: theme.spacing(1),
-        // backgroundColor: 'transparent'
+        margin: 0,
+        padding: theme.spacing(2),
+        backgroundColor: 'transparent'
     },
-    // noteBox: {
-    //     backgroundColor: 'transparent'
-    // },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
+    noteBox: {
+        backgroundColor: 'transparent'
+    },
     noteText: {
         color: 'red',
         textAlign: 'center',
@@ -42,18 +44,6 @@ const styles = theme => ({
     },
     editButton: {
         padding: '7%'
-    },
-    backButton: {
-        maxWidth: '40%',
-        float: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 'auto',
-        width: 'fit-content',
-        padding: '7%'
-
     }
 })
 
@@ -101,7 +91,6 @@ class Notes extends Component {
             payload: this.props.notesReducer.notesForBook
         })
         //this below will actually make the edit and details page update if a user is editing notes from that page.
-        //scrapped, because it broke things too much. may revisit later
         // this.props.dispatch({
         //     type: 'FETCH_EDITS',
         //     payload: {id: bookId}
@@ -118,25 +107,22 @@ class Notes extends Component {
                 onClose={this.handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={this.props.notesReducer.notesOpen}
-                maxWidth="xs"
+                maxWidth="md"
                 fullWidth={true}
                 className={classes.noteBox}
             >
-                <DialogTitle className={classes.title}>
-                    Notes
-                </DialogTitle>
-                <DialogContent>
-                    {this.state.inputOpen ?
+                <h5 className={classes.title}>Notes:</h5>
+                {/* {JSON.stringify(this.state)} */}
 
-                        <Grid container spacing={2} justify={'center'} alignItems={'center'} direction={'column'}>
+                {this.state.inputOpen ?
+                    <div>
+                        <Grid container spacing={2} justify={'space-around'} alignItems={'center'} direction={'column'}>
                             <Grid item>
                                 <TextField
                                     id="outlined-name"
                                     label="Notes"
                                     multiline
-                                    fullWidth
                                     rowsMax="4"
-                                    style={{ margin: 1 }}
                                     className={classes.textField}
                                     value={this.props.notesReducer.notesForBook.notes ? this.props.notesReducer.notesForBook.notes : ''}
                                     onChange={this.handleChange('inputText')}
@@ -149,37 +135,24 @@ class Notes extends Component {
                                     <Button onClick={() => this.handleCancelEdit()} variant="outlined" color="secondary" className={classes.buttons}>
                                         Cancel
                                     </Button>
-                                </Grid>
+                                </Grid>    
                                 <Grid item>
                                     <Button onClick={() => this.handleSaveEdit()} variant="outlined" color="primary" className={classes.buttons}>
                                         Save
                                     </Button>
                                 </Grid>
                             </Grid>
-                        </Grid> :
-                        <Grid container spacing={1} justify={'center'} alignItems={'center'} direction={'column'}>
-                            <Grid item>
-                                <DialogContentText className={classes.noteText}>
-                                    {this.props.notesReducer.notesForBook.notes}
-                                </DialogContentText>
-                            </Grid>
                         </Grid>
-                    }
-                </DialogContent>
-                <DialogActions>
-                    <Grid container spacing={1} justify={'center'} alignItems={'center'} direction={'column'}>
-                        <Grid item>
-                            <IconButton aria-label="edit" size="small" className={classes.editButton} onClick={() => this.setState({ inputOpen: !this.state.inputOpen })}>
-                                <EditIcon fontSize="inherit" />
-                            </IconButton>
-                        </Grid>
-                        <div className={classes.backButton}>
-                            <Button className={classes.backButton} onClick={this.handleClose} color="primary" variant="contained" size="small">
-                                Back
-                            </Button>
-                        </div>
-                    </Grid>
-                </DialogActions>
+                    </div> :
+                    <p className={classes.noteText} >{this.props.notesReducer.notesForBook.notes}</p>
+                }
+
+                <IconButton aria-label="edit" size="small" className={classes.editButton} onClick={() => this.setState({ inputOpen: !this.state.inputOpen })}>
+                    <EditIcon fontSize="inherit" />
+                </IconButton>
+                <Button onClick={this.handleClose} color="primary" variant="contained">
+                    Back
+                </Button>
             </Dialog>
         )
     }

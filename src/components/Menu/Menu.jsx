@@ -49,6 +49,11 @@ class Menu extends Component {
         this.props.history.push('/about');
     }
 
+    goToTags = () => {
+        console.log('clicked tags');
+        this.props.history.push('/tags');
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -71,7 +76,7 @@ class Menu extends Component {
                         onKeyDown={this.toggleDrawer('left', false)}
                     >
                         <List>
-                            <ListItem button key={'tags'}>
+                            <ListItem button key={'tags'} onClick={() => this.goToTags()}>
                                 <ListItemIcon>
                                     <MailIcon />
                                 </ListItemIcon>
@@ -80,11 +85,11 @@ class Menu extends Component {
                         </List>
                         <Divider />
                         <List>
-                            <ListItem button key={'about'}>
+                            <ListItem button key={'about'} onClick={() => this.goToAbout()}>
                                 <ListItemIcon>
                                     <MailIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={'About'} onClick={() => this.goToAbout()}/>
+                                <ListItemText primary={'About'}/>
                             </ListItem>
                             <ListItem button key={'login'} onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>

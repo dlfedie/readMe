@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-import Notes from '../Notes/Notes'
+import Notes from '../Notes/Notes';
 
 
 import { withStyles } from '@material-ui/core/styles';

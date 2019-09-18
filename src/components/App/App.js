@@ -23,6 +23,7 @@ import WishList from '../WishList/WishList';
 import Search from '../Search/Search';
 import LibraryDetails from '../LibraryDetails/LibraryDetails';
 import EditBook from '../EditBook/EditBook';
+import Tags from '../Tags/Tags';
 
 //Material UI
 import 'typeface-roboto';
@@ -103,6 +104,11 @@ class App extends Component {
                 exact
                 path="/editbook/:id"
                 component={EditBook}
+              />
+              <ProtectedRoute
+                exact
+                path="/tags"
+                component={Tags}
               />
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />
