@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
+// import LogOutButton from '../LogOutButton/LogOutButton';
 import Menu from '../Menu/Menu';
 import './Nav.css';
 
@@ -10,10 +10,8 @@ const Nav = (props) => (
     <Link to="/home">
       <h2 id="nav-title" className="nav-title">ReadMe</h2>
     </Link>
-    <div>
-      <Menu />
-    </div>
     <div className="nav-right">
+      <Menu />
       <Link className="nav-link" to="/home">
         {/* Show this link if they are logged in or not,
         but call this link 'Home' if they are logged in,
@@ -32,14 +30,14 @@ const Nav = (props) => (
           <Link className="nav-link" to="/wishlist">
             Wish List
           </Link>
-          <LogOutButton className="nav-link"/>
+          {/* <LogOutButton className="nav-link"/> */}
         </>
       )}
       
       {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
+      {/* <Link className="nav-link" to="/about">
         About
-      </Link>
+      </Link> */}
     </div>
   </div>
 );

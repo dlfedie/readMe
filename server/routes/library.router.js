@@ -244,6 +244,9 @@ router.put('/rating', rejectUnauthenticated, (req, res) => {
     console.log('attempting to update rating:', req.body);
     const bookToUpdate = req.body.bookId;
     const rating = req.body.value;
+    const currently_reading = req.body.currently_reading;
+    const wish_list = req.body.wish_list;
+    const nope_list = req.body.nope_list;
 
     //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
     const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
@@ -253,8 +256,8 @@ router.put('/rating', rejectUnauthenticated, (req, res) => {
             console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
 
             if (result.rows[0].user_id === req.user.id) {
-                const queryText = `UPDATE "books" SET "rating" = $1 WHERE "id" = $2;`;
-                pool.query(queryText, [rating, bookToUpdate])
+                const queryText = `UPDATE "books" SET "rating" = $1, "currently_reading" = $2, "wish_list" = $3, "nope_list" = $4 WHERE "id" = $5;`;
+                pool.query(queryText, [rating, currently_reading, wish_list, nope_list, bookToUpdate])
                     .then(result => {
                         res.sendStatus(200);
                     }).catch(err => {
@@ -271,101 +274,101 @@ router.put('/rating', rejectUnauthenticated, (req, res) => {
         })
 })
 
-//update current status
-router.put('/current', rejectUnauthenticated, (req, res) => {
-    console.log('attempting to update rating:', req.body);
-    const bookToUpdate = req.body.bookId;
-    const current = req.body.currently_reading;
+//update current status -- NOT NEEDED, I'M WEIRD AND WILL JUST PASS THIS IN ONE FULL PUT...
+// router.put('/current', rejectUnauthenticated, (req, res) => {
+//     console.log('attempting to update rating:', req.body);
+//     const bookToUpdate = req.body.bookId;
+//     const current = req.body.currently_reading;
 
-    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
-    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+//     //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+//     const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
 
-    pool.query(queryCheck, [bookToUpdate])
-        .then(result => {
-            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+//     pool.query(queryCheck, [bookToUpdate])
+//         .then(result => {
+//             console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
 
-            if (result.rows[0].user_id === req.user.id) {
-                const queryText = `UPDATE "books" SET "currently_reading" = $1 WHERE "id" = $2;`;
-                pool.query(queryText, [current, bookToUpdate])
-                    .then(result => {
-                        res.sendStatus(200);
-                    }).catch(err => {
-                        console.log('error in update currenstatus try:', err);
-                        res.sendStatus(500)
-                    })
-            } else {
-                //user is trying to update a book that's not theirs
-                res.sendStatus(403);
-            }
-        }).catch(err => {
-            console.log('error in update currenstatus auth check:', err);
-            res.sendStatus(500);
-        })
-})
+//             if (result.rows[0].user_id === req.user.id) {
+//                 const queryText = `UPDATE "books" SET "currently_reading" = $1 WHERE "id" = $2;`;
+//                 pool.query(queryText, [current, bookToUpdate])
+//                     .then(result => {
+//                         res.sendStatus(200);
+//                     }).catch(err => {
+//                         console.log('error in update currenstatus try:', err);
+//                         res.sendStatus(500)
+//                     })
+//             } else {
+//                 //user is trying to update a book that's not theirs
+//                 res.sendStatus(403);
+//             }
+//         }).catch(err => {
+//             console.log('error in update currenstatus auth check:', err);
+//             res.sendStatus(500);
+//         })
+// })
 
-//update wishlist status
-router.put('/wish', rejectUnauthenticated, (req, res) => {
-    console.log('attempting to update rating:', req.body);
-    const bookToUpdate = req.body.bookId;
-    const wish = req.body.wish_list;
+// //update wishlist status
+// router.put('/wish', rejectUnauthenticated, (req, res) => {
+//     console.log('attempting to update rating:', req.body);
+//     const bookToUpdate = req.body.bookId;
+//     const wish = req.body.wish_list;
 
-    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
-    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+//     //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+//     const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
 
-    pool.query(queryCheck, [bookToUpdate])
-        .then(result => {
-            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+//     pool.query(queryCheck, [bookToUpdate])
+//         .then(result => {
+//             console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
 
-            if (result.rows[0].user_id === req.user.id) {
-                const queryText = `UPDATE "books" SET "wish_list" = $1 WHERE "id" = $2;`;
-                pool.query(queryText, [wish, bookToUpdate])
-                    .then(result => {
-                        res.sendStatus(200);
-                    }).catch(err => {
-                        console.log('error in update wishlist try:', err);
-                        res.sendStatus(500)
-                    })
-            } else {
-                //user is trying to update a book that's not theirs
-                res.sendStatus(403);
-            }
-        }).catch(err => {
-            console.log('error in update wishlist check:', err);
-            res.sendStatus(500);
-        })
-})
+//             if (result.rows[0].user_id === req.user.id) {
+//                 const queryText = `UPDATE "books" SET "wish_list" = $1 WHERE "id" = $2;`;
+//                 pool.query(queryText, [wish, bookToUpdate])
+//                     .then(result => {
+//                         res.sendStatus(200);
+//                     }).catch(err => {
+//                         console.log('error in update wishlist try:', err);
+//                         res.sendStatus(500)
+//                     })
+//             } else {
+//                 //user is trying to update a book that's not theirs
+//                 res.sendStatus(403);
+//             }
+//         }).catch(err => {
+//             console.log('error in update wishlist check:', err);
+//             res.sendStatus(500);
+//         })
+// })
 
-//update current status
-router.put('/nope', rejectUnauthenticated, (req, res) => {
-    console.log('attempting to update rating:', req.body);
-    const bookToUpdate = req.body.bookId;
-    const nope = req.body.nope_list;
+//update nope status
+// router.put('/nope', rejectUnauthenticated, (req, res) => {
+//     console.log('attempting to update rating:', req.body);
+//     const bookToUpdate = req.body.bookId;
+//     const nope = req.body.nope_list;
 
-    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
-    const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
+//     //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+//     const queryCheck = `SELECT * FROM "books" WHERE "id" = $1;`;
 
-    pool.query(queryCheck, [bookToUpdate])
-        .then(result => {
-            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+//     pool.query(queryCheck, [bookToUpdate])
+//         .then(result => {
+//             console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
 
-            if (result.rows[0].user_id === req.user.id) {
-                const queryText = `UPDATE "books" SET "nope_list" = $1 WHERE "id" = $2;`;
-                pool.query(queryText, [nope, bookToUpdate])
-                    .then(result => {
-                        res.sendStatus(200);
-                    }).catch(err => {
-                        console.log('error in update NOPElist try:', err);
-                        res.sendStatus(500)
-                    })
-            } else {
-                //user is trying to update a book that's not theirs
-                res.sendStatus(403);
-            }
-        }).catch(err => {
-            console.log('error in update NOPElist check:', err);
-            res.sendStatus(500);
-        })
-})
+//             if (result.rows[0].user_id === req.user.id) {
+//                 const queryText = `UPDATE "books" SET "nope_list" = $1 WHERE "id" = $2;`;
+//                 pool.query(queryText, [nope, bookToUpdate])
+//                     .then(result => {
+//                         res.sendStatus(200);
+//                     }).catch(err => {
+//                         console.log('error in update NOPElist try:', err);
+//                         res.sendStatus(500)
+//                     })
+//             } else {
+//                 //user is trying to update a book that's not theirs
+//                 res.sendStatus(403);
+//             }
+//         }).catch(err => {
+//             console.log('error in update NOPElist check:', err);
+//             res.sendStatus(500);
+//         })
+// })
 
 
 module.exports = router;
