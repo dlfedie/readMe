@@ -47,6 +47,9 @@ const styles = theme => ({
         margin: theme.spacing(1),
         justifyContent: 'center',
 
+    },
+    fabSearch: {
+        marginTop: '6%'
     }
 
 });
@@ -137,7 +140,7 @@ class Search extends Component {
                                 variant="outlined"
                                 onChange={this.setSearch}
                             />
-                            <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.searchForBooks}>
+                            <Fab color="primary" aria-label="add" className={classes.fabSearch} onClick={this.searchForBooks}>
                                 <SearchIcon />
                             </Fab>
                             {/* </form> */}
