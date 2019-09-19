@@ -25,15 +25,64 @@ function* addTag(action) {
         yield put({
             type: 'FETCH_TAGS'
         })
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+        yield put({
+            type: 'FETCH_WISH_LIST'
+        })
     } catch(error){
         console.log('error in tag POST', error);
-        
     }
 }
+
+function* removeTag(action) {
+    try {
+        yield console.log('in removeTag', action.payload);
+        yield axios.delete(`/api/tags/${action.payload.tagId}`);
+        yield put({
+            type: 'FETCH_TAGS'
+        })
+
+        
+        yield put({
+            type: 'FETCH_LIBRARY'
+        })
+        yield put({
+            type: 'FETCH_WISH_LIST'
+        })
+    } catch(err) {
+        console.log('error in tag DELETE');
+    }
+}
+
+function* updateTag(action) {
+    try {
+        yield console.log('in editTag:', action.payload);
+        let tagId = action.payload.tagId
+        yield axios.put('/api/tags', action.payload);
+        yield put({
+            type: 'FETCH_TAGS'
+        })
+        // yield put({
+        //     type: 'FETCH_LIBRARY'
+        // })
+        // yield put({
+        //     type: 'FETCH_WISH_LIST'
+        // })
+
+    } catch (err) {
+        console.log('error in editNotes:', err);
+    }
+}
+
+
 
 function* tagsSaga() {
     yield takeLatest('FETCH_TAGS', searchForTags);
     yield takeLatest('ADD_TAG', addTag);
+    yield takeLatest('REMOVE_TAG', removeTag);
+    yield takeLatest('UPDATE_TAG', updateTag);
 }
 
 export default tagsSaga;
