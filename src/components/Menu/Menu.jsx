@@ -14,8 +14,10 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import LabelIcon from '@material-ui/icons/Label';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 //basic class component. what we've been taught, so I'll start here.
 
@@ -78,7 +80,7 @@ class Menu extends Component {
                         <List>
                             <ListItem button key={'tags'} onClick={() => this.goToTags()}>
                                 <ListItemIcon>
-                                    <MailIcon />
+                                    <LabelIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'Tags'} />
                             </ListItem>
@@ -87,13 +89,13 @@ class Menu extends Component {
                         <List>
                             <ListItem button key={'about'} onClick={() => this.goToAbout()}>
                                 <ListItemIcon>
-                                    <MailIcon />
+                                    <InfoIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'About'}/>
                             </ListItem>
                             <ListItem button key={'login'} onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>
-                                    <InboxIcon />
+                                    <ExitToAppIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'Logout'} />
                             </ListItem>

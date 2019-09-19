@@ -41,9 +41,39 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             console.log('error in tags POST', err);
             res.sendStatus(500);
         })
-
-
 });
+
+//delete route
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    const tagId = req.params.id;
+    console.log('attmpting to delete tag,', tagId, 'from user:', req.user.id);
+
+    //need to check if user is the correct one; don't need any cross-deleting/postman deletes to happen.
+    const queryCheck = `SELECT * FROM "tags" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [tagId])
+        .then(result => {
+            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `DELETE FROM "tags" WHERE "id" = $1;`;
+                pool.query(queryText, [tagId])
+                    .then(result => {
+                        res.sendStatus(204);
+                    }).catch(err => {
+                        console.log('error in tag DELETE try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to delete a tag that's not theirs
+                res.sendStatus(403);
+            }
+
+        }).catch(err => {
+            console.log('error in delete tag auth check:', err);
+            res.sendStatus(500);
+        })
+})
 
 module.exports = router;
 
