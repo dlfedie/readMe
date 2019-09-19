@@ -53,7 +53,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 
     pool.query(queryCheck, [tagId])
         .then(result => {
-            console.log('queryCheck response. book_user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+            console.log('queryCheck response. user_id, req_user_id:', result.rows[0].user_id, req.user.id);
 
             if (result.rows[0].user_id === req.user.id) {
                 const queryText = `DELETE FROM "tags" WHERE "id" = $1;`;
@@ -74,6 +74,39 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
 })
+
+//tags PUT
+router.put('/', rejectUnauthenticated, (req, res) => {
+    console.log('attempting to update the tag:', req.body);
+    const tagToUpdate = req.body.tagId;
+    const tagEdit = req.body.editTag;
+
+    //need to check if user is the correct one; don't need any cross-updating/postman updates to happen.
+    const queryCheck = `SELECT * FROM "tags" WHERE "id" = $1;`;
+
+    pool.query(queryCheck, [tagToUpdate])
+        .then(result => {
+            console.log('queryCheck response. user_id, req_user_id:', result.rows[0].user_id, req.user.id);
+
+            if (result.rows[0].user_id === req.user.id) {
+                const queryText = `UPDATE "tags" SET "tag_name" = $1 WHERE "id" = $2;`;
+                pool.query(queryText, [tagEdit, tagToUpdate])
+                    .then(result => {
+                        res.sendStatus(200);
+                    }).catch(err => {
+                        console.log('error in tag update try:', err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                //user is trying to update a book that's not theirs
+                res.sendStatus(403);
+            }
+        }).catch(err => {
+            console.log('error in rating update auth check:', err);
+            res.sendStatus(500);
+        })
+})
+
 
 module.exports = router;
 

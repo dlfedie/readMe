@@ -47,6 +47,7 @@ class Tags extends Component {
     state = {
         addTag: '',
         editTag: '',
+        tagId: '',
         editTagOpen: false
     }
 
@@ -72,6 +73,7 @@ class Tags extends Component {
         console.log('clicked the chip id:', tag.id);
         this.setState({
             ...this.state,
+            tagId: tag.id,
             editTag: tag.tag_name,
             editTagOpen: true
         })
@@ -94,6 +96,7 @@ class Tags extends Component {
         this.setState({
             addTag: '',
             editTag: '',
+            tagId: '',
             editTagOpen: false
         })
     }
