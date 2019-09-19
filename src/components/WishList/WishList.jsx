@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LibraryItem from '../LibraryItem/LibraryItem';
-import Notes from '../Notes/Notes-old';
+import Notes from '../Notes/Notes';
 
 //material ui
 import 'typeface-roboto';

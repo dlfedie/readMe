@@ -42,13 +42,17 @@ function* removeBook(action) {
     }
 }
 
-function* updateRating(action) {
+//this now catches all updates
+function* updateEditPage(action) {
     try {  
-        yield console.log('in updateRating', action.payload);
-        yield axios.put('/api/library/rating', action.payload);
+        yield console.log('in updateEditPage', action.payload);
+        yield axios.put('/api/library/edit', action.payload);
         yield put({
             type: 'FETCH_LIBRARY'
         });
+        yield put({
+            type: 'FETCH_WISH_LIST'
+        })
     } catch(err) {
         console.log('error in rating update:', err);
     }
@@ -192,7 +196,7 @@ function* librarySaga() {
     yield takeLatest('ADD_BOOK_TO_LIBRARY', addBookToLibrary);
     yield takeLatest('FETCH_LIBRARY', fetchLibrary);
     yield takeLatest('DELETE_BOOK', removeBook);
-    yield takeLatest('UPDATE_RATING', updateRating);
+    yield takeLatest('UPDATE_EDIT_PAGE', updateEditPage);
     yield takeLatest('GET_DETAILS', getDetails);
     // yield takeLatest('UPDATE_CURRENT', updateCurrent);
     // yield takeLatest('UPDATE_WISH', updateWish);

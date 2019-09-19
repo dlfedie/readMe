@@ -123,7 +123,7 @@ class Search extends Component {
             <>
                 <div className={classes.root}>
                     <h1 className={classes.sectionHeader}>Search</h1>
-
+                    <p>Search below for books to add to your library</p>
                     <Grid container direction="row" spacing={2} justify="center">
                         <Grid item xl={12}>
                             {/* <form onSubmit={this.searchForBooks}> */}

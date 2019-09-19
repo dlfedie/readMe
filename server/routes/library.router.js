@@ -239,8 +239,8 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
         })
 })
 
-//update rating route
-router.put('/rating', rejectUnauthenticated, (req, res) => {
+//update from edit page route
+router.put('/edit', rejectUnauthenticated, (req, res) => {
     console.log('attempting to update rating:', req.body);
     const bookToUpdate = req.body.bookId;
     const rating = req.body.value;
