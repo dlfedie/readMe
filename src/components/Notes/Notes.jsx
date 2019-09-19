@@ -26,13 +26,15 @@ const styles = theme => ({
         // padding: theme.spacing(1),
         // backgroundColor: 'transparent'
     },
-    // noteBox: {
-    //     backgroundColor: 'transparent'
-    // },
+    noteBox: {
+        // width: '400px'
+    },
     noteText: {
         color: 'red',
         textAlign: 'center',
-
+    },
+    textField: {
+        // width: '120%'
     },
     title: {
         textAlign: 'center',
@@ -136,7 +138,6 @@ class Notes extends Component {
                                     multiline
                                     fullWidth
                                     rowsMax="4"
-                                    style={{ margin: 1 }}
                                     className={classes.textField}
                                     value={this.props.notesReducer.notesForBook.notes ? this.props.notesReducer.notesForBook.notes : ''}
                                     onChange={this.handleChange('inputText')}
