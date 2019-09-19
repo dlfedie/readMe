@@ -99,7 +99,7 @@ class EditBook extends Component {
     saveEdit = () => {
         console.log('clicked save button');
         this.props.dispatch({
-            type: 'UPDATE_RATING',
+            type: 'UPDATE_EDIT_PAGE',
             payload: {
                 value: this.state.rating,
                 currently_reading: this.state.current,
