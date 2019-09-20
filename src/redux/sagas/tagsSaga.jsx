@@ -52,7 +52,7 @@ function* removeTag(action) {
 function* updateTag(action) {
     try {
         yield console.log('in editTag:', action.payload);
-        let tagId = action.payload.tagId
+        // let tagId = action.payload.tagId
         yield axios.put('/api/tags', action.payload);
         yield put({
             type: 'FETCH_TAGS'
