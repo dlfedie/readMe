@@ -57,7 +57,6 @@ class MyLibrary extends Component {
         this.props.dispatch({
             type: 'FETCH_LIBRARY'
         })
-        // window.scrollTo(0, this.props.history);
         if (this.props.bookOn && this.props.library) {
             document.getElementById(this.props.bookOn).scrollIntoView();
         }

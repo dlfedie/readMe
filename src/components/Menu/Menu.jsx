@@ -17,6 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LabelIcon from '@material-ui/icons/Label';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
 
 //basic class component. what we've been taught, so I'll start here.
@@ -83,6 +84,12 @@ class Menu extends Component {
                                     <LabelIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={'Tags'} />
+                            </ListItem>
+                            <ListItem button key={'nope list'} >
+                                <ListItemIcon>
+                                    <NotInterestedIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'NOPE List'} />
                             </ListItem>
                         </List>
                         <Divider />

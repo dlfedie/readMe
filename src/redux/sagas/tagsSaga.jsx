@@ -25,12 +25,12 @@ function* addTag(action) {
         yield put({
             type: 'FETCH_TAGS'
         })
-        yield put({
-            type: 'FETCH_LIBRARY'
-        })
-        yield put({
-            type: 'FETCH_WISH_LIST'
-        })
+        // yield put({
+        //     type: 'FETCH_LIBRARY'
+        // })
+        // yield put({
+        //     type: 'FETCH_WISH_LIST'
+        // })
     } catch(error){
         console.log('error in tag POST', error);
     }
@@ -43,14 +43,7 @@ function* removeTag(action) {
         yield put({
             type: 'FETCH_TAGS'
         })
-
         
-        yield put({
-            type: 'FETCH_LIBRARY'
-        })
-        yield put({
-            type: 'FETCH_WISH_LIST'
-        })
     } catch(err) {
         console.log('error in tag DELETE');
     }
@@ -59,7 +52,7 @@ function* removeTag(action) {
 function* updateTag(action) {
     try {
         yield console.log('in editTag:', action.payload);
-        let tagId = action.payload.tagId
+        // let tagId = action.payload.tagId
         yield axios.put('/api/tags', action.payload);
         yield put({
             type: 'FETCH_TAGS'
