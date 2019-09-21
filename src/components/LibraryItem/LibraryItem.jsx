@@ -43,7 +43,7 @@ const styles = theme => ({
     },
     ratingHeader: {
         textAlign: 'center',
-        color: 'blue'
+        color: '#015384'
     },
     padMe: {
         paddingLeft: '5%'
@@ -62,6 +62,9 @@ const styles = theme => ({
         justifyContent: 'center',
         display: 'center',
         alignContent: 'center',
+    },
+    ranks: {
+        width: '80%'
     }
 
 });
@@ -127,34 +130,34 @@ class LibraryItem extends Component {
 
         return (
             <>
-            <GridListTile key={this.props.book.id} id={this.props.book.id} cols={1} rows={1} className={classes.tileItem}  >
-                <div>
+                <GridListTile key={this.props.book.id} id={this.props.book.id} cols={1} rows={1} className={classes.tileItem}  >
                     <div>
-                        <h4 className={classes.centerMe}>{this.props.book.book_title}</h4>
-                        <h5 className={classes.centerMe}>{this.props.book.book_subtitle}</h5>
-                    </div>
-                    <div className={classes.imageAndRating}>
-                        <img src={this.props.book.book_image_url} alt={this.props.book.book_title} className={classes.padMe} />
-                        <Grid container direction={'column'} justify={'center'} alignItems={'center'}>
+                        <div>
+                            <h4 className={classes.centerMe}>{this.props.book.book_title}</h4>
+                            <h5 className={classes.centerMe}>{this.props.book.book_subtitle}</h5>
+                        </div>
+                        <div className={classes.imageAndRating}>
+                            <img src={this.props.book.book_image_url} alt={this.props.book.book_title} className={classes.padMe} />
+                            <Grid container direction={'column'} justify={'center'} alignItems={'center'}>
                                 {this.props.history.location.pathname === '/wishlist' &&
-                                <Grid item className={classes.rankings}>
-                                    <h5 className={classes.ratingHeader}>Wish List Rank: {this.props.book.wish_rank}</h5>
-                                    <IconButton 
-                                        aria-label="rankUp"
-                                        className={classes.notes}
-                                        onClick={() => this.rankUp(this.props.book.id)}
-                                    >
-                                        <ArrowUpwardIcon fontSize="small" />
-                                    </IconButton>
-                                    <span> change rank </span>
-                                    <IconButton
-                                        aria-label="rankUp"
-                                        className={classes.notes}
-                                        onClick={() => this.rankDown(this.props.book.id)}
-                                    >
-                                        <ArrowDownwardIcon fontSize="small" />
-                                    </IconButton>
-                                </Grid>}
+                                    <Grid item container direction={'row'} justify={'center'} alignItems={'center'} spacing={0} className={classes.rankings}>
+                                        <h4 className={classes.ratingHeader}>Wish List Rank: {this.props.book.wish_rank}</h4>
+                                        <IconButton
+                                            aria-label="rankUp"
+                                            className={classes.ranks}
+                                            onClick={() => this.rankUp(this.props.book.id)}
+                                        >
+                                            <ArrowUpwardIcon fontSize="small" />
+                                        </IconButton>
+                                        <span>change rank</span>
+                                        <IconButton
+                                            aria-label="rankUp"
+                                            className={classes.ranks}
+                                            onClick={() => this.rankDown(this.props.book.id)}
+                                        >
+                                            <ArrowDownwardIcon fontSize="small" />
+                                        </IconButton>
+                                    </Grid>}
                                 <Grid item>
                                     <Rating
                                         name={JSON.stringify(this.props.book.id)}
@@ -181,33 +184,33 @@ class LibraryItem extends Component {
                                         </IconButton>
                                     }
                                 </Grid>
-                        </Grid>
-                        
-                    </div>
-                    <div className={classes.padMe}>
-                        <p>Author(s): {this.props.book.book_author}</p>
-                        <p>Pages: {this.props.book.page_total}</p>
-                    </div>
-                    <div>
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="secondary"
-                            className={classes.editButton}
-                            onClick={() => this.getBookDetails(this.props.book.id)}>
-                            Details
+                            </Grid>
+
+                        </div>
+                        <div className={classes.padMe}>
+                            <p>Author(s): {this.props.book.book_author}</p>
+                            <p>Pages: {this.props.book.page_total}</p>
+                        </div>
+                        <div>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                color="secondary"
+                                className={classes.editButton}
+                                onClick={() => this.getBookDetails(this.props.book.id)}>
+                                Details
                         </Button>
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="primary"
-                            className={classes.editButton}
-                            onClick={() => this.editBook(this.props.book)}>
-                            Edit
+                            <Button
+                                variant="contained"
+                                size="small"
+                                color="primary"
+                                className={classes.editButton}
+                                onClick={() => this.editBook(this.props.book)}>
+                                Edit
                         </Button>
+                        </div>
                     </div>
-                </div>
-            </GridListTile>
+                </GridListTile>
             </>
         )
     }
