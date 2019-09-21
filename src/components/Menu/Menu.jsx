@@ -24,7 +24,15 @@ import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
 const styles = theme => ({
     menu: {
-        color: 'blue',
+        color: '#a2cf6e',
+    },
+    list: {
+        background: '#e7f7fe',
+        backgroundColor: '#e7f7fe'
+    },
+    paper: {
+        background: '#e7f7fe',
+        backgroundColor: '#e7f7fe'
     }
 })
 
@@ -71,7 +79,7 @@ class Menu extends Component {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)} className={classes.drawer}>
                     <div
                         className={classes.list}
                         role="presentation"
