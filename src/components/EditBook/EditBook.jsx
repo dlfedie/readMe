@@ -46,23 +46,31 @@ const styles = theme => ({
     },
     title: {
         display: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     toggles: {
         justifyContent: 'right',
         float: 'right',
-        padding: '10px'
+        padding: '8px',
+        paddingTop: '32px',
+        paddingLeft: '16px'
     },
     beef: {
         float: 'right',
-        padding: '10px',
+        padding: '8px',
         textAlign: 'right',
         display: 'right',
     },
     removeButton: {
-        padding: '10px',
+        padding: '8px',
         display: 'center',
         textAlign: 'center'
+    },
+    topLeft: {
+        padding: '8px'
+    },
+    notesText:{
+        padding: '8px'
     }
 
 });
@@ -109,28 +117,7 @@ class EditBook extends Component {
             }
         })
 
-        //i'm a fool and did all of this separately... doesn't need to be.
-        // this.props.dispatch({
-        //     type: 'UPDATE_CURRENT',
-        //     payload: {
-        //         currently_reading: this.state.current,
-        //         bookId: this.props.edit.id
-        //     }
-        // })
-        // this.props.dispatch({
-        //     type: 'UPDATE_WISH',
-        //     payload: {
-        //         wish_list: this.state.wish,
-        //         bookId: this.props.edit.id
-        //     }
-        // })
-        // this.props.dispatch({
-        //     type: 'UPDATE_NOPE',
-        //     payload: {
-        //         nope_list: this.state.nope,
-        //         bookId: this.props.edit.id
-        //     }
-        // })
+        
         this.props.history.goBack();
     }
 
@@ -205,6 +192,7 @@ class EditBook extends Component {
                                 <FormHelperText>Pick only one</FormHelperText>
                             </FormControl>
                         </div>
+                        <div className={classes.topLeft}>
                         <h4>{this.props.edit.book_title}</h4>
                         <h5>{this.props.edit.book_subtitle}</h5>
                         <p>Author(s): {this.props.edit.book_author}</p>
@@ -230,6 +218,7 @@ class EditBook extends Component {
                                     <NoteAddIcon fontSize="small" />
                             </IconButton>
                         }
+                        </div>
                         <div className={classes.notesText}>
                             <h5 className={classes.title}>Notes</h5>
                             <p>{this.props.edit.notes}</p>
