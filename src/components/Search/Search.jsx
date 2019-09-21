@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Button from '@material-ui/core/Button';
 
 //basic class component. what we've been taught, so I'll start here.
 
@@ -24,6 +25,9 @@ const styles = theme => ({
         marginRight: theme.spacing(1),
     },
     fab: {
+        margin: theme.spacing(1),
+    },
+    detailsButton: {
         margin: theme.spacing(1),
     },
     root: {
@@ -52,7 +56,11 @@ const styles = theme => ({
     },
     fabSearch: {
         marginTop: '6%'
-    }
+    },
+    // searchForm: {
+    //     width: '90%',
+    //     float: 'center'
+    // }
 
 });
 
@@ -99,7 +107,7 @@ class Search extends Component {
 
         this.props.dispatch({
             type: 'SET_SNACKBAR_TEXT',
-            payload: { notificationText: 'Successfully added book to Library!'}
+            payload: { notificationText: 'Successfully added book to Library!' }
         })
 
         this.props.dispatch({
@@ -124,16 +132,22 @@ class Search extends Component {
             return (
                 <GridListTile key={index} cols={1} rows={1} className={classes.tileItem}  >
                     <div>
-                        <div onClick={() => this.getSearchBookDetails(book)}>
-                            <h4>{book.volumeInfo.title}</h4>
-                            <h5>{book.volumeInfo.subtitle}</h5>
-                            <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
-                        </div>
+                        <h4>{book.volumeInfo.title}</h4>
+                        <h5>{book.volumeInfo.subtitle}</h5>
+                        <img src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail} alt={book.volumeInfo.title} />
                         <p>Author(s): {book.volumeInfo.authors && book.volumeInfo.authors.map((author, index) => { return (<span key={index}>{author} </span>) })}</p>
                         <p>Pages: {book.volumeInfo.pageCount}</p>
                         <Fab color="secondary" aria-label="add" className={classes.fab} onClick={() => this.addBookToLibrary(book)} size="small">
                             <AddCircleOutlineIcon fontSize="small" />
                         </Fab>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            color="primary"
+                            className={classes.detailsButton}
+                            onClick={() => this.getSearchBookDetails(book)}>
+                            Details
+                        </Button>
                     </div>
                 </GridListTile>
             )
@@ -146,7 +160,7 @@ class Search extends Component {
                     <p>Search below for books to add to your library</p>
                     <Grid container direction="row" spacing={2} justify="center">
                         <Grid item xl={12}>
-                            {/* <form onSubmit={this.searchForBooks}> */}
+                            {/* <form onSubmit={this.searchForBooks} className={classes.searchForm}> */}
                             <TextField
                                 id="outlined-helperText"
                                 label="Search"
@@ -161,6 +175,7 @@ class Search extends Component {
                             <Fab color="primary" aria-label="add" className={classes.fabSearch} onClick={this.searchForBooks}>
                                 <SearchIcon />
                             </Fab>
+
                             {/* </form> */}
                         </Grid>
                     </Grid>
