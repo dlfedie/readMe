@@ -31,6 +31,7 @@ const styles = theme => ({
         justifyContent: 'center',
         display: 'center',
         alignContent: 'center',
+        backgroundColor: '#e7f7fe'
 
     },
     title: {
