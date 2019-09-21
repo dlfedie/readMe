@@ -170,14 +170,14 @@ class LibraryItem extends Component {
                                             className={classes.notes}
                                             onClick={() => this.openNote(this.props.book.notes)}
                                         >
-                                            <NoteIcon fontSize="small" />
+                                            <NoteIcon fontSize="large" color="primary" />
                                         </IconButton> :
                                         <IconButton
                                             aria-label="noteAdd"
                                             className={classes.notes}
                                             onClick={() => this.openNote(this.props.book.notes)}
                                         >
-                                            <NoteAddIcon fontSize="small" />
+                                            <NoteAddIcon fontSize="large" color="secondary" />
                                         </IconButton>
                                     }
                                 </Grid>

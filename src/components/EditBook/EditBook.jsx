@@ -69,8 +69,12 @@ const styles = theme => ({
     topLeft: {
         padding: '8px'
     },
-    notesText:{
+    notesText: {
         padding: '8px'
+    },
+    navButtons: {
+        margin: '8px',
+
     }
 
 });
@@ -208,14 +212,14 @@ class EditBook extends Component {
                                 className={classes.notes}
                                 onClick={() => this.openNote(this.props.edit.notes)}
                                 >
-                                    <NoteIcon fontSize="small" />
+                                    <NoteIcon fontSize="large" color="primary" />
                             </IconButton> :
                             <IconButton 
                                 aria-label="noteAdd" 
                                 className={classes.notes}
                                 onClick={() => this.openNote(this.props.edit.notes)}
                                 >
-                                    <NoteAddIcon fontSize="small" />
+                                    <NoteAddIcon fontSize="large" color="secondary" />
                             </IconButton>
                         }
                         </div>
@@ -235,12 +239,12 @@ class EditBook extends Component {
                             </Button>
                         </div>
                         <div className={classes.beef}>
-                            <Button variant="contained" size="small" color="secondary" onClick={() => { this.cancelEdit() }} >
+                            <Button variant="contained" size="small" color="secondary" onClick={() => { this.cancelEdit() }} className={classes.navButtons} >
                                 Cancel
-                        </Button>
-                            <Button variant="contained" size="small" color="primary" onClick={() => { this.saveEdit() }} >
+                            </Button>
+                            <Button variant="contained" size="small" color="primary" onClick={() => { this.saveEdit() }} className={classes.navButtons} >
                                 Save
-                        </Button>
+                            </Button>
                         </div>
                     </div>
                 </Card>

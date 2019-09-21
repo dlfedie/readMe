@@ -30,7 +30,7 @@ const styles = theme => ({
         // width: '400px'
     },
     noteText: {
-        color: 'red',
+        color: 'black',
         textAlign: 'center',
     },
     textField: {
