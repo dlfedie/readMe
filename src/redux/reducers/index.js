@@ -7,6 +7,7 @@ import searchResults from './searchReducer';
 import library from './libraryReducer';
 import notes from './notesReducer';
 import tags from './tagsReducer';
+import snackbar from './snackbarReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   library, //library reducer, for storing a user's library
   notes, //notes reducer
   tags, //tags reducer
+  snackbar, //snackbar reducer
 });
 
 export default rootReducer;

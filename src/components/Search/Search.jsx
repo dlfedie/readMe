@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import SnackbarNotifications from '../SnackbarNotifications/SnackbarNotifications';
+
 //material ui
 import 'typeface-roboto';
 import TextField from '@material-ui/core/TextField';
@@ -60,6 +62,12 @@ class Search extends Component {
         search: ''
     }
 
+    // componentDidMount() {
+    //     this.props.dispatch({
+    //         type: 'SNACKBAR_TRUE'
+    //     });
+    // }
+
     setSearch = (event) => {
         // console.log(event.target.value);
         //sets our input to state
@@ -88,6 +96,15 @@ class Search extends Component {
             type: 'ADD_BOOK_TO_LIBRARY',
             payload: book
         })
+
+        this.props.dispatch({
+            type: 'SET_SNACKBAR_TEXT',
+            payload: { notificationText: 'Successfully added book to Library!'}
+        })
+
+        this.props.dispatch({
+            type: 'SNACKBAR_TRUE'
+        });
     }
 
     getSearchBookDetails = (book) => {
@@ -139,6 +156,7 @@ class Search extends Component {
                                 margin="normal"
                                 variant="outlined"
                                 onChange={this.setSearch}
+                                autoComplete="off"
                             />
                             <Fab color="primary" aria-label="add" className={classes.fabSearch} onClick={this.searchForBooks}>
                                 <SearchIcon />
@@ -157,7 +175,7 @@ class Search extends Component {
                         </GridList>}
                     {/* {JSON.stringify(this.props.searchResults)} */}
                 </div>
-
+                <SnackbarNotifications />
             </>
         )
     }
