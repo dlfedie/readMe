@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import LibraryItem from '../LibraryItem/LibraryItem';
 import Notes from '../Notes/Notes';
+import SnackbarNotifications from '../SnackbarNotifications/SnackbarNotifications';
+
 
 //material ui
 import 'typeface-roboto';
@@ -91,6 +93,7 @@ class MyLibrary extends Component {
                         {libraryResults}
                     </GridList>}
                 <Notes />
+                <SnackbarNotifications />
             </div>
         )
     }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import Notes from '../Notes/Notes';
+import SnackbarNotifications from '../SnackbarNotifications/SnackbarNotifications';
+
 
 import Swal from 'sweetalert2';
 
@@ -127,6 +129,14 @@ class EditBook extends Component {
                 bookId: this.props.edit.id
             }
         })
+        this.props.dispatch({
+            type: 'SET_SNACKBAR_TEXT',
+            payload: { notificationText: 'Saved edits.' }
+        });
+
+        this.props.dispatch({
+            type: 'SNACKBAR_TRUE'
+        });
 
         
         this.props.history.goBack();
@@ -155,7 +165,7 @@ class EditBook extends Component {
                         type: 'success',
                         title: 'Whew!',
                         text: 'You saved the book!',
-                        confirmButtonColor: '#4caf50',
+                        confirmButtonColor: '#8bc34a',
                         cancelButtonColor: '#f4511e',
                     }
                 
@@ -288,6 +298,7 @@ class EditBook extends Component {
                     </div>
                 </Card>
                 <Notes />
+                <SnackbarNotifications />
             </div>
         )
     }

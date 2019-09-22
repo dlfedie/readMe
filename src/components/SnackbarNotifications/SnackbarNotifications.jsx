@@ -41,14 +41,14 @@ class SnackbarNotification extends Component {
         return (
             <Snackbar
                 // className="success"
-                variant="success"
+                // variant="success"
 
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
                 open={this.props.snackbar.snackbarOpen}
-                autoHideDuration={6000}
+                autoHideDuration={5000}
                 onClose={this.handleClose}
                 // ContentProps={{
                 //     'aria-describedby': 'message-id',
@@ -65,7 +65,7 @@ class SnackbarNotification extends Component {
                             <CloseIcon />
                         </IconButton>,
                     ]}
-                    style={{ backgroundColor: '#4caf50' }}
+                    style={{ backgroundColor: '#8bc34a' }}
                 />
             </Snackbar>
         );
