@@ -114,6 +114,14 @@ class LibraryItem extends Component {
             type: 'RANK_UP_WISH',
             payload: id
         })
+        this.props.dispatch({
+            type: 'SET_SNACKBAR_TEXT',
+            payload: { notificationText: 'Moved book up a rank.' }
+        });
+
+        this.props.dispatch({
+            type: 'SNACKBAR_TRUE'
+        });
     }
 
     rankDown = (id) => {
@@ -122,6 +130,14 @@ class LibraryItem extends Component {
             type: 'RANK_DOWN_WISH',
             payload: id
         })
+        this.props.dispatch({
+            type: 'SET_SNACKBAR_TEXT',
+            payload: { notificationText: 'Moved book down a rank.' }
+        });
+
+        this.props.dispatch({
+            type: 'SNACKBAR_TRUE'
+        });
     }
 
 

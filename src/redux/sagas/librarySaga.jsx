@@ -39,12 +39,15 @@ function* removeBook(action) {
         yield put({
             type: 'FETCH_LIBRARY'
         });
+        yield put({
+            type: 'FETCH_WISH_LIST'
+        })
         yield Swal.fire(
             {
                 type: 'success',
                 title: 'Deleted!',
                 text: 'You have deleted the book.',
-                confirmButtonColor: '#4caf50',
+                confirmButtonColor: '#8bc34a',
                 cancelButtonColor: '#f4511e',
             }
         )
