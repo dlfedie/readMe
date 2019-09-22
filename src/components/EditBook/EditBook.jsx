@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import Notes from '../Notes/Notes';
 
+import Swal from 'sweetalert2';
+
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -73,7 +75,11 @@ const styles = theme => ({
     notesText: {
         padding: '8px'
     },
-    navButtons: {
+    navButtonCancel: {
+        margin: '8px',
+        // backgroundColor: '#f4511e'
+    },
+    navButtonSave: {
         margin: '8px',
 
     }
@@ -90,7 +96,7 @@ class EditBook extends Component {
     }
 
     componentDidMount() {
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         this.props.dispatch({
             type: 'SET_BOOK_CLICKED',
             payload: this.props.match.params.id
@@ -126,13 +132,45 @@ class EditBook extends Component {
         this.props.history.goBack();
     }
 
-    removeBookFromLibrary = (id) => {
-        console.log('clicked on delete for book ID:', id);
-        this.props.dispatch({
-            type: 'DELETE_BOOK',
-            payload: { bookIdToDelete: id }
+    removeBookFromLibrary = (book) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to delete ${book.book_title}!`,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8bc34a',
+            cancelButtonColor: '#f4511e',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                this.props.dispatch({
+                    type: 'DELETE_BOOK',
+                    payload: { bookIdToDelete: book.id }
+                })
+                this.props.history.goBack();
+            } else {
+                //if cancelled, then show confirmation of no delete
+                Swal.fire(
+                    {
+                        type: 'success',
+                        title: 'Whew!',
+                        text: 'You saved the book!',
+                        confirmButtonColor: '#4caf50',
+                        cancelButtonColor: '#f4511e',
+                    }
+                
+                )
+                console.log('no delete');
+
+                return //stop if they click cancel
+            }
         })
-        this.props.history.goBack();
+        // console.log('clicked on delete for book ID:', id);
+        // this.props.dispatch({
+        //     type: 'DELETE_BOOK',
+        //     payload: { bookIdToDelete: id }
+        // })
+        
     }
 
     changeRating = (event) => {
@@ -234,16 +272,16 @@ class EditBook extends Component {
                             <h5 className={classes.title}>Tags</h5>
                         </div>
                         <div className={classes.removeButton}>
-                            <Button variant="contained" color="secondary" size="small" onClick={() => this.removeBookFromLibrary(this.props.edit.id)}>
+                            <Button variant="contained" color="secondary" size="small" onClick={() => this.removeBookFromLibrary(this.props.edit)}>
                                 Remove From Library
                             <DeleteIcon className={classes.rightIcon} />
                             </Button>
                         </div>
                         <div className={classes.beef}>
-                            <Button variant="contained" size="small" color="secondary" onClick={() => { this.cancelEdit() }} className={classes.navButtons} >
+                            <Button variant="contained" size="small" color="secondary" onClick={() => { this.cancelEdit() }} className={classes.navButtonCancel} >
                                 Cancel
                             </Button>
-                            <Button variant="contained" size="small" color="primary" onClick={() => { this.saveEdit() }} className={classes.navButtons} >
+                            <Button variant="contained" size="small" color="primary" onClick={() => { this.saveEdit() }} className={classes.navButtonSave} >
                                 Save
                             </Button>
                         </div>

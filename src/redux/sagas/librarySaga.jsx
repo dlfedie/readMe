@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 
 import { put, takeLatest } from 'redux-saga/effects';
 
@@ -37,8 +39,26 @@ function* removeBook(action) {
         yield put({
             type: 'FETCH_LIBRARY'
         });
+        yield Swal.fire(
+            {
+                type: 'success',
+                title: 'Deleted!',
+                text: 'You have deleted the book.',
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#f4511e',
+            }
+        )
     } catch(err) {
         console.log('error in removeBook DELETE:', err);
+        Swal.fire(
+            {
+                type: 'error',
+                title: 'Oh no!',
+                text: `The book could not be deleted. Server says: ${err}`,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#f4511e',
+            }
+        )
     }
 }
 
@@ -58,41 +78,6 @@ function* updateEditPage(action) {
     }
 }
 
-// function* updateCurrent(action) {
-//     try {
-//         yield console.log('in updateCurrent', action.payload);
-//         yield axios.put('/api/library/current', action.payload);
-//         yield put({
-//             type: 'FETCH_LIBRARY'
-//         })
-//     } catch(err) {
-//         console.log('error in updateCurrent:', err);
-//     }
-// }
-
-// function* updateWish(action) {
-//     try {
-//         yield console.log('in updateWish', action.payload);
-//         yield axios.put('/api/library/wish', action.payload);
-//         yield put({
-//             type: 'FETCH_LIBRARY'
-//         })
-//     } catch (err) {
-//         console.log('error in updateWish:', err);
-//     }
-// }
-
-// function* updateNope(action) {
-//     try {
-//         yield console.log('in updateNope', action.payload);
-//         yield axios.put('/api/library/nope', action.payload);
-//         yield put({
-//             type: 'FETCH_LIBRARY'
-//         })
-//     } catch (err) {
-//         console.log('error in updateNope:', err);
-//     }
-// }
 
 function* getDetails(action) {
     try {
