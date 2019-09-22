@@ -116,7 +116,7 @@ class LibraryItem extends Component {
         })
         this.props.dispatch({
             type: 'SET_SNACKBAR_TEXT',
-            payload: { notificationText: 'Moved book up a rank.' }
+            payload: { notificationText: 'Added a point to book.' }
         });
 
         this.props.dispatch({
@@ -132,7 +132,7 @@ class LibraryItem extends Component {
         })
         this.props.dispatch({
             type: 'SET_SNACKBAR_TEXT',
-            payload: { notificationText: 'Moved book down a rank.' }
+            payload: { notificationText: 'Removed a point from book.' }
         });
 
         this.props.dispatch({
@@ -157,7 +157,7 @@ class LibraryItem extends Component {
                             <Grid container direction={'column'} justify={'center'} alignItems={'center'}>
                                 {this.props.history.location.pathname === '/wishlist' &&
                                     <Grid item container direction={'row'} justify={'center'} alignItems={'center'} spacing={0} className={classes.rankings}>
-                                        <h4 className={classes.ratingHeader}>Wish List Rank: {this.props.book.wish_rank}</h4>
+                                        <h4 className={classes.ratingHeader}>Points: {this.props.book.wish_rank}</h4>
                                         <IconButton
                                             aria-label="rankUp"
                                             className={classes.ranks}

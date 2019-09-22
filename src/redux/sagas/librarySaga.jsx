@@ -120,7 +120,9 @@ function* updateNotes(action) {
         yield put({
             type: 'FETCH_LIBRARY'
         })
-        
+        yield put({
+            type: 'FETCH_WISH_LIST'
+        })
     } catch(err) {
         console.log('error in editNotes:', err);
     }
