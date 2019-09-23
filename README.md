@@ -1,3 +1,81 @@
+# ReadMe
+
+ReadMe is a reading tracker app that allows you to take notes on the books you've read or been recommended by friends.
+
+## Built With
+
+- [Node.js](https://nodejs.org/en/)
+- [PostrgeSQL](https://www.postgresql.org/)
+- [Nodemon](https://nodemon.io/)
+- [Express.js]
+- [React.js]
+- [Redux]
+- [Material UI]
+- [SweetAlerts2]
+
+## Getting Started
+
+Download or clone this repo. Then setup the database as outlined in the database.sql file.
+
+### Prerequisites
+
+Link to software that is required before you attempt to start the app (e.g. node, mongo).
+
+- [Node.js](https://nodejs.org/en/)
+- List other prerequisites here
+
+
+### Installing
+
+Steps to get the development environment running.
+
+1. Download this project.
+2. `npm install`
+3. `npm start`
+
+And so on...
+
+## Screen Shot
+
+Include one or two screen shots of your project here (optional). Remove if unused.
+
+## Documentation
+
+Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
+
+### Completed Features
+
+High level list of items completed.
+
+- [x] Feature a
+- [x] Feature b
+
+### Next Steps
+
+Features that you would like to add at some point in the future.
+
+- [ ] Feature c
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Authors
+
+* Name of author(s)
+
+
+## Acknowledgments
+
+* Hat tip to anyone who's code was used
+
+
+
+
+
+
+
+
 # Prime Project
 This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
 
