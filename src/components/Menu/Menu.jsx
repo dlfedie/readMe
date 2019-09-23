@@ -28,7 +28,8 @@ const styles = theme => ({
     },
     list: {
         background: '#e7f7fe',
-        backgroundColor: '#e7f7fe'
+        backgroundColor: '#e7f7fe',
+        height: '100%'
     },
     paper: {
         background: '#e7f7fe',
