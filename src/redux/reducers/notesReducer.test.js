@@ -4,7 +4,9 @@ describe('testing notesReducer states', () => {
     test('both reducers should have correct initial state', () => {
         let action = {};
         let newState = notesReducer(undefined, action);
-        expect(newState).toEqual({ notesForBook: { notes: '', bookId: '' }, notesOpen: false})
+        expect(newState).toEqual({ 
+            notesForBook: { notes: '', bookId: '' }, 
+            notesOpen: false})
     });
     test('notesForBook reducer getting data', () => {
         let action = {
@@ -36,7 +38,7 @@ describe('testing notesReducer states', () => {
             type: 'EDIT_NOTES',
             payload: 'the thing'
         }
-        let newState = notesReducer({ notesForBook: { notes: '', bookId: 5 }, notesOpen: true }, action);
-        expect(newState).toEqual({ notesForBook: { notes: 'the thing', bookId: 5 }, notesOpen: true })
+        let newState = notesReducer({ notesForBook: { notes: '', bookId: 666 }, notesOpen: true }, action);
+        expect(newState).toEqual({ notesForBook: { notes: 'the thing', bookId: 666 }, notesOpen: true })
     })
 })
