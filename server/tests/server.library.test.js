@@ -53,4 +53,15 @@ describe('test the root path of /library', () => {
         const userResponse = await agent.get('/api/library/notes/34');
         expect(userResponse.statusCode).toBe(200);
     })
+
+    //test put route works, again, if right pwd is entered. db did update, and test passed.
+    test('try to get 200 when logged in to PUT of /api/library/notes/', async () => {
+        let agent = testServer.agent(app);
+        const response = await agent.post('/api/user/login')
+            .send({ username: 'roo', password: 'asld;fjas;dlkfjasd;lfkj' });
+        expect(response.statusCode).toBe(200);
+        const userResponse = await agent.put('/api/library/notes/')
+            .send({bookId: 24, notes: 'hullo db'});
+        expect(userResponse.statusCode).toBe(200);
+    })
 })
