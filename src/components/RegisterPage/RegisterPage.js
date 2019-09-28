@@ -30,7 +30,7 @@ class RegisterPage extends Component {
   registerUser = (event) => {
     event.preventDefault();
 
-    if (this.state.username && this.state.password && this.state.password.length > 6) {
+    if (this.state.username && this.state.password && this.state.password.length > 5) {
       this.props.dispatch({
         type: 'REGISTER',
         payload: {
@@ -63,7 +63,7 @@ class RegisterPage extends Component {
             {this.props.errors.registrationMessage}
           </h2>
         )}
-        <form onSubmit={this.registerUser}>
+        <form onSubmit={this.registerUser} className={classes.form}>
           <h1 className={classes.header}>Register User</h1>
           <h4 className={classes.header}>Please enter a password with 6 or more characters.</h4>
           <div>
@@ -110,6 +110,7 @@ class RegisterPage extends Component {
           </div>
         </form>
         <center>
+          <br/>
           <button
             type="button"
             className="link-button"
