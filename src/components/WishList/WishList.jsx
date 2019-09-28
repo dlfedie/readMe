@@ -24,6 +24,12 @@ const styles = theme => ({
         justifyContent: 'space-around',
         overflow: 'hidden',
     },
+    header: {
+        textAlign: 'center',
+    },
+    headerBox: {
+        width: '100%'
+    },
     gridList: {
         width: '90%',
         height: 'auto',
@@ -79,7 +85,9 @@ class WishList extends Component {
 
         return (
             <div className={classes.root}>
-                <h1 id="topOfPage">Wish List</h1>
+                <div className={classes.headerBox}>
+                    <h1 className={classes.header}>Wish List</h1>
+                </div>
                 {/* {JSON.stringify(this.props.history.location.pathname)} */}
 
                 {this.props.wishList &&

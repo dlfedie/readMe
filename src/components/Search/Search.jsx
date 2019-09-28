@@ -37,6 +37,9 @@ const styles = theme => ({
         justifyContent: 'space-around',
         overflow: 'hidden',
     },
+    header: {
+        textAlign: 'center'
+    },
     gridList: {
         width: 'auto',
         height: 'auto',
@@ -156,8 +159,10 @@ class Search extends Component {
         return (
             <>
                 <div className={classes.root}>
-                    <h1 className={classes.sectionHeader}>Search</h1>
-                    <p>Search below for books to add to your library</p>
+                    <div>
+                        <h1 className={classes.header}>Search</h1>
+                        <p className={classes.header}>Search below for books to add to your library</p>
+                    </div>
                     <Grid container direction="row" spacing={2} justify="center">
                         <Grid item xl={12}>
                             {/* <form onSubmit={this.searchForBooks} className={classes.searchForm}> */}
