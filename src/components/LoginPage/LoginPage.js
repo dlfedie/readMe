@@ -68,6 +68,7 @@ class LoginPage extends Component {
           <form onSubmit={this.login} className={classes.form}>
             <Grid item>
               <h1 className={classes.header}>Login</h1>
+              <p className={classes.header}>Page is best viewed on mobile.</p>
             </Grid>
             <center>
               <Grid item>

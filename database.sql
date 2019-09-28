@@ -18,52 +18,36 @@ CREATE TABLE "books"
 (
     "id" serial NOT NULL,
     "book_title" varchar(255) NOT NULL,
+    "book_subtitle" varchar(255),
     "book_author" varchar(255) NOT NULL,
     "book_image_url" varchar(1023),
-    "book_summary" varchar(2046),
+    "book_summary" varchar(6000),
     "book_id_on_google" varchar(255) NOT NULL,
-    "book_published" DATE NOT NULL,
-    "isbn" int,
-    "user_id" int NOT NULL,
+    "book_published" varchar(50) NOT NULL,
+    "user_id" int NOT NULL REFERENCES "user"("id"),
     "page_total" int NOT NULL,
     "page_on" int,
-    "rank" int NOT NULL,
-    "notes" varchar(2046) NOT NULL,
-    "currently_reading" bool NOT NULL,
-    "wish_list" bool NOT NULL,
-    "nope_list" bool NOT NULL,
-    CONSTRAINT "books_pk" PRIMARY KEY ("id")
+    "rating" int DEFAULT 0,
+    "notes" varchar(2046),
+    "currently_reading" BOOLEAN DEFAULT FALSE,
+    "wish_list" BOOLEAN DEFAULT FALSE,
+    "nope_list" BOOLEAN DEFAULT FALSE,
+    "wish_rank" int DEFAULT 0
 );
 
 
 CREATE TABLE "tags"
 (
     "id" serial NOT NULL,
-    "tag_name" varchar(50) NOT NULL,
+    "tag_name" varchar(30) NOT NULL,
     "user_id" int NOT NULL,
-    "book_id" int NOT NULL,
-    CONSTRAINT "tags_pk" PRIMARY KEY ("id")
 );
 
 
 
 
-CREATE TABLE "friends"
-(
-    "id" serial NOT NULL,
-    "user_id" int NOT NULL,
-    "created_friend" varchar(50) NOT NULL,
-    "book_id" int NOT NULL,
-    CONSTRAINT "friends_pk" PRIMARY KEY ("id")
-);
 
 
 
 
-ALTER TABLE "books" ADD CONSTRAINT "books_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
 
-ALTER TABLE "tags" ADD CONSTRAINT "tags_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "tags" ADD CONSTRAINT "tags_fk1" FOREIGN KEY ("book_id") REFERENCES "books"("id");
-
-ALTER TABLE "friends" ADD CONSTRAINT "friends_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "friends" ADD CONSTRAINT "friends_fk1" FOREIGN KEY ("book_id") REFERENCES "books"("id");

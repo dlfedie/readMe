@@ -1,6 +1,26 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
+
+import 'typeface-roboto';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+  form: {
+    padding: '50px',
+    paddingBottom: '100px'
+  },
+  header: {
+    textAlign: 'center'
+  },
+  button: {
+    margin: '3%',
+  }
+
+
+})
+
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -30,6 +50,9 @@ class RegisterPage extends Component {
   }
 
   render() {
+
+    const { classes } = this.props;
+
     return (
       <div>
         {this.props.errors.registrationMessage && (
@@ -41,7 +64,8 @@ class RegisterPage extends Component {
           </h2>
         )}
         <form onSubmit={this.registerUser}>
-          <h1>Register User</h1>
+          <h1 className={classes.header}>Register User</h1>
+          <h4 className={classes.header}>Please enter a password with 6 or more characters.</h4>
           <div>
             <label htmlFor="username">
               Username:
@@ -65,12 +89,24 @@ class RegisterPage extends Component {
             </label>
           </div>
           <div>
-            <input
+            <center>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  type="submit"
+                  name="submit"
+                  value="Register"> Register
+                </Button>
+              </div>
+            </center>
+            {/* <input
               className="register"
               type="submit"
               name="submit"
               value="Register"
-            />
+            /> */}
           </div>
         </form>
         <center>
@@ -94,5 +130,5 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+export default connect(mapStateToProps)(withStyles(styles)(RegisterPage));
 
