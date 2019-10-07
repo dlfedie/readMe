@@ -2,6 +2,8 @@
 
 This is a full stack app that allows a user to add books to a library, take notes on them, and categorize them by currently reading or want to read. This app hooks into Google Books api to retrieve book data.
 
+A demo deployed to heroku can be viewed here: https://evening-atoll-19955.herokuapp.com/
+
 ## Built With
 
 - [Node.js](https://nodejs.org/en/)
